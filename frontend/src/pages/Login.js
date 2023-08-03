@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import FormInput from '../components/Form/FormInput';
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 import FormSideDetails from '../components/Form/FormSideDetails';
+import { AuthContext } from '../context/AuthProvider';
 
 const Home = () => {
+  const { authInfo, handleLogin } = useContext(AuthContext);
+  console.log(authInfo);
+
   const [inputData, setInputData] = useState({
     email: '',
     password: '',
@@ -25,6 +29,8 @@ const Home = () => {
       email: inputData.email,
       password: inputData.password,
     };
+
+    handleLogin(payload.email, payload.password);
 
     console.log(payload);
   };
