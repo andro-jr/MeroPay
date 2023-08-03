@@ -23,6 +23,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message || err });
 });
 
+console.log('Hello darkness my old friend');
+
 app.listen(PORT, () => {
   console.log(`Server running in port ${PORT}`);
 });

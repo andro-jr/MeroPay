@@ -104,3 +104,85 @@ exports.verifyEmail = async (req, res) => {
     message: 'Your email is verified',
   });
 };
+
+exports.resendEmailVerificationToken = async (req, res) => {
+  const { userId } = req.body;
+
+  const user = await User.findById(userId);
+  if (!user) {
+    return sendError(res, 'User not found', 404);
+  }
+  if (user.isVerified) {
+    return sendError(res, 'User already verified');
+  }
+
+  const hasToken = await EmailVerificationToken.findOne({
+    owner: userId,
+  });
+  if (hasToken) {
+    return sendError(res, 'Next token only after one hour');
+  }
+
+  // Generate 6 digit OPT
+  let otp = generateOTP(6);
+
+  // Store otp inside Db
+  const newEmailVerificationToken = new EmailVerificationToken({
+    owner: user._id,
+    token: otp,
+  });
+
+  await newEmailVerificationToken.save();
+
+  //send otp to user
+  var transport = generateMailTransporter();
+
+  transport.sendMail({
+    form: 'verification@ourapp.com',
+    to: user.email,
+    subject: 'Email Verification',
+    html: `<p>Your verification OTP</p>
+    <h1>${otp}</h1>
+    `,
+  });
+
+  res.json({ message: 'New Otp has been sent to your email' });
+};
+
+exports.forgetPassword = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) return sendError(res, 'Email is missing');
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    return sendError(res, 'User not found', 404);
+  }
+
+  const hasToken = await PasswordResetToken.findOne({ owner: user._id });
+  if (hasToken) {
+    return sendError(res, 'Next token only after one hour');
+  }
+
+  const token = await generateRandomByte();
+  const newPasswordResetToken = await PasswordResetToken({
+    owner: user._id,
+    token,
+  });
+  await newPasswordResetToken.save();
+
+  const resetPasswordUrl = `http:://localhost:3000/auth/reset-password?token=${token}&id=${user._id}`;
+
+  var transport = generateMailTransporter();
+
+  transport.sendMail({
+    form: 'security@ourapp.com',
+    to: user.email,
+    subject: 'Reset Password',
+    html: `<p>Click here to reset your password</p>
+    <a href='${resetPasswordUrl}' target='_blank'>Change Password</a>
+    `,
+  });
+
+  res.json({ message: 'Reset link sent to your email' });
+};
