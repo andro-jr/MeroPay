@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../index.css';
+import '../../index.css';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 const FormInput = ({
@@ -20,10 +20,10 @@ const FormInput = ({
 
   return (
     <div
-      className={`relative mb-5 ${style}  min-w-auto lg:min-w-[400px] flex flex-col-reverse`}
+      className={`relative mb-5 ${style}  min-w-auto lg:min-w-[300px] xl:min-w-[400px] flex flex-col-reverse`}
     >
       <input
-        className='peer relative w-full py-2 mt-1  border-b-2 border-blue-600 outline-none placeholder:text-sm placeholder:tracking-wider transition tracking-wider text-sm'
+        className='relative w-full py-3 mt-2  border-b-2 border-blue-600 outline-none placeholder:text-sm placeholder:tracking-wider transition tracking-wider text-sm peer'
         placeholder={placeholder}
         type={type === 'password' ? (show ? 'text' : 'password') : type}
         name={name}

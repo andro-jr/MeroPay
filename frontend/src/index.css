@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --white: #ffffff;
+  --gray__gradient: linear-gradient(0deg, #ffffff 0%, #c0c0c0 50%, #ffffff 100%);
+}
+
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
@@ -13,17 +18,30 @@ body {
   grid-template-columns: 1.5fr 1fr;
 }
 
-.input__field{
+@media only screen and (max-width: 850px) {
+  .login {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+.input__field {
   outline: none;
-  padding: .5rem 2rem;
+  padding: 0.5rem 2rem;
   border: 1px solid red;
 }
 
-.input__field:focus{
+.input__field:focus {
   border-left: 3px solid rgb(0, 135, 245);
 }
 
-.form__label{
-  color: #BCBCBC;
+.form__label {
+  color: #bcbcbc;
   text-transform: capitalize;
+}
+
+.gradient__border {
+  border-right: 2px solid transparent;
+  border-image: var(--gray__gradient);
+  border-image-slice: 1;
 }
