@@ -186,3 +186,21 @@ exports.forgetPassword = async (req, res) => {
 
   res.json({ message: 'Reset link sent to your email' });
 };
+
+exports.singIn = async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) return sendError(res, 'Email or Password mismatch', 404);
+
+  const userMatched = await user.comparePass(password);
+  if (!userMatched) return sendError(res, 'Email or Password Mismatch', 404);
+
+  const jwtToken = jwt.sign({ euserId: user._id }, process.env.JWT_SECRET);
+
+  const { _id, name, role, isVerified } = user;
+
+  res.json({
+    user: { id: _id, name, email, token: jwtToken, isVerified, role },
+  });
+};
