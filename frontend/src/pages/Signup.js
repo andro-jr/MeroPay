@@ -11,9 +11,12 @@ const Signup = () => {
     password: "",
   });
 
+  console.log(inputData);
+
   const handleChange = (e) => {
     e.preventDefault();
     const { value, name } = e.target;
+    console.log(value, name);
     setInputData({ ...inputData, [name]: value });
   };
 
@@ -23,7 +26,7 @@ const Signup = () => {
     e.preventDefault();
 
     const payload = {
-      username: inputData.username,
+      name: inputData.username,
       email: inputData.email,
       password: inputData.password,
     };
@@ -46,7 +49,7 @@ const Signup = () => {
             <FormInput
               placeholder="lamaleon213"
               type="text"
-              name="Username"
+              name="username"
               value={inputData}
               onChange={handleChange}
             />
@@ -66,7 +69,7 @@ const Signup = () => {
             />
 
             <Button
-              title="Login"
+              title="Sign Up"
               styles="bg-blue-600 text-white hover:bg-blue-700 transition-all duration-0 hover:duration-150 ease-in-out"
             />
 
