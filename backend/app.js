@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
+
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 require('express-async-errors');
@@ -13,6 +15,8 @@ require('./db');
 // const userRouter = require('./routes/user');
 
 const PORT = process.env.PORT || 8000;
+
+app.use(cors());
 
 app.use('/api/user', userRouter);
 
