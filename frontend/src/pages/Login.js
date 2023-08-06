@@ -1,13 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import FormInput from '../components/Form/FormInput';
 import Button from '../components/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import FormSideDetails from '../components/Form/FormSideDetails';
 import { AuthContext } from '../context/AuthProvider';
+import { NotificationContext } from '../context/NotificationProvider';
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const { authInfo, handleLogin } = useContext(AuthContext);
-  console.log(authInfo);
+  const { isLoggedIn } = authInfo;
+
+  const { updateNotification } = useContext(NotificationContext);
 
   const [inputData, setInputData] = useState({
     email: '',
@@ -31,9 +36,11 @@ const Home = () => {
     };
 
     handleLogin(payload.email, payload.password);
-
-    console.log(payload);
   };
+
+  useEffect(() => {
+    if (isLoggedIn) navigate('/');
+  }, [isLoggedIn]);
 
   return (
     <div className='flex w-screen h-screen items-center justify-center'>

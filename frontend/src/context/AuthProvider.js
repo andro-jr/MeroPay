@@ -1,9 +1,12 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { getisAuth, signInUser } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
+import { NotificationContext } from './NotificationProvider';
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const { updateNotification } = useContext(NotificationContext);
+
   const navigate = useNavigate();
 
   const defaultAuthInfo = {
@@ -19,7 +22,7 @@ const AuthProvider = ({ children }) => {
     setAuthInfo({ ...authInfo, isPending: true });
     const { error, user } = await signInUser({ email, password });
     if (error) {
-      //   updateNotification('error', error);
+      updateNotification('error', error);
       return setAuthInfo({ ...authInfo, isPending: false, error: error });
     }
 
@@ -32,6 +35,8 @@ const AuthProvider = ({ children }) => {
       error: '',
     });
 
+    updateNotification('success', 'Sign In successful');
+
     localStorage.setItem('auth-token', user.token);
   };
 
@@ -43,7 +48,7 @@ const AuthProvider = ({ children }) => {
     setAuthInfo({ ...authInfo, isPending: true });
     const { error, user } = await getisAuth(token);
     if (error) {
-      //   updateNotification('error', error);
+      updateNotification('error', error);
       return setAuthInfo({ ...authInfo, isPending: false, error: error });
     }
 

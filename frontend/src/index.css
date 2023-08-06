@@ -1,16 +1,21 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   --white: #ffffff;
-  --gray__gradient: linear-gradient(0deg, #ffffff 0%, #c0c0c0 50%, #ffffff 100%);
+  --gray__gradient: linear-gradient(
+    0deg,
+    #ffffff 0%,
+    #c0c0c0 50%,
+    #ffffff 100%
+  );
 }
 
 body {
   margin: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .login {
@@ -44,4 +49,25 @@ body {
   border-right: 2px solid transparent;
   border-image: var(--gray__gradient);
   border-image-slice: 1;
+}
+
+/* Bounce animation */
+
+.bounce {
+  animation: gelatine 0.5s 1;
+}
+@keyframes gelatine {
+  from,
+  to {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(0.9, 1.1);
+  }
+  50% {
+    transform: scale(1.1, 0.9);
+  }
+  75% {
+    transform: scale(0.95, 1.05);
+  }
 }
