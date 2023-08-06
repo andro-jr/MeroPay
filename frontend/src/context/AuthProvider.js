@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getisAuth, signInUser } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
 import { NotificationContext } from './NotificationProvider';
@@ -69,6 +69,10 @@ const AuthProvider = ({ children }) => {
 
     navigate('/auth/sign-in');
   };
+
+  useEffect(() => {
+    isAuth();
+  }, []);
 
   return (
     <AuthContext.Provider

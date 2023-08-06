@@ -10,6 +10,9 @@ const { generateOTP, generateMailTransporter } = require('../utils/mail');
 exports.create = async (req, res) => {
   const { name, email, password } = req.body;
 
+  const usernameExists = await User.findOne({ name });
+  if (usernameExists) return sendError(res, 'This username is already taken');
+
   const oldUser = await User.findOne({ email });
   if (oldUser) return sendError(res, 'This email is already in Use');
   const newUser = new User({ name, email, password });
