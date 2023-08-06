@@ -79,7 +79,7 @@ const Signup = () => {
             <span className="text-sm text-gray-400 flex gap-2 mt-8 text-center items-center justify-center">
               <p>Already have an account?</p>
               <Link
-                to="/login"
+                to="/auth/sign-in"
                 className=" hover:text-blue-600 transition-all duration-0 hover:duration-50 ease-in-out hover:underline"
               >
                 Login
