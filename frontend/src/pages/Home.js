@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
-import { Navigate } from 'react-router-dom';
 
 const Home = () => {
   const navigate = useNavigate();
