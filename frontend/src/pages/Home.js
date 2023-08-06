@@ -4,11 +4,7 @@ import { AuthContext } from "../context/AuthProvider";
 import { Navigate } from "react-router-dom";
 
 const Home = () => {
-  const {isAuth} = useContext(AuthContext);
-
-  isAuth();
-  
-
+  // const { isAuth } = useContext(AuthContext);
 
   return (
     <div>
