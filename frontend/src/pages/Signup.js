@@ -87,7 +87,6 @@ const Signup = () => {
           <p className="my-8 mt-4 max-w-[350px] lg:max-w-[400px] text-center">
             Signup for Mero Pay. Your complete expense Tracker
           </p>
-
           <form onSubmit={handleSubmit}>
             <FormInput
               placeholder="lamaleon213"
