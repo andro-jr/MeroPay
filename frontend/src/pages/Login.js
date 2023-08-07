@@ -47,11 +47,11 @@ const Home = () => {
       <div className='container max-w-[1200px] m-auto login min-h-[70vh]'>
         <FormSideDetails />
 
-        <div className='flex flex-col items-center my-auto pl-20'>
+        <div className='flex flex-col items-center my-auto pl:0 xl:pl-20'>
           <h3 className='text-4xl text-blue-600 font-bold mt-0 md:mt-10'>
             Log in to Mero Pay
           </h3>
-          <p className='mb-8 mt-4 max-w-[400px] text-center'>
+          <p className='mb-8 mt-4 max-w-[350px] text-center'>
             Welcome to Mero Pay. Your complete expense Tracker
           </p>
           <form onSubmit={handleSubmit}>
@@ -83,7 +83,7 @@ const Home = () => {
             <span className='text-sm text-gray-400 flex gap-2 mt-14 text-center items-center justify-center'>
               <p>New to MeroPay?</p>
               <Link
-                to='/signup'
+                to='/auth/signup'
                 className=' hover:text-blue-600 transition-all duration-0 hover:duration-50 ease-in-out hover:underline'
               >
                 Create Account

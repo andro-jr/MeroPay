@@ -23,7 +23,7 @@ body {
   grid-template-columns: 1.5fr 1fr;
 }
 
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 912px) {
   .login {
     display: grid;
     grid-template-columns: 1fr;
