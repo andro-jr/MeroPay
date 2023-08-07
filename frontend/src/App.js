@@ -3,8 +3,8 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import ForgetPassword from './pages/Signup';
-import ResetPassword from './pages/Signup';
+import ForgetPassword from './pages/ForgetPassword';
+import ResetPassword from './pages/ResetPassword';
 import EmailVerification from './pages/EmailVerification';
 
 const App = () => {

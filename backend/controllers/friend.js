@@ -74,3 +74,53 @@ exports.acceptRequest = async (req, res) => {
     message: 'Friend request accepted',
   });
 };
+
+exports.getPendingRequests = async (req, res) => {
+  const { userId } = req.body;
+
+  if (!isValidObjectId(userId)) return sendError(res, 'Invalid Request');
+
+  const user = await User.findById(userId);
+  if (!user) return sendError(res, 'User not found', 404);
+
+  const pendingFriendsData = await user.pendingFriends;
+
+  const friendsArray = await Promise.all(
+    pendingFriendsData.map(async (friendId) => {
+      const friend = await User.findById(friendId);
+      if (friend) {
+        return {
+          userId: friend.id,
+          name: friend.name,
+        };
+      }
+    })
+  );
+
+  res.send(friendsArray);
+};
+
+exports.getAllFriends = async (req, res) => {
+  const { userId } = req.body;
+
+  if (!isValidObjectId(userId)) return sendError(res, 'Invalid Request');
+
+  const user = await User.findById(userId);
+  if (!user) return sendError(res, 'User not found', 404);
+
+  const friendsData = await user.friends;
+
+  const friendsArray = await Promise.all(
+    friendsData.map(async (friendId) => {
+      const friend = await User.findById(friendId);
+      if (friend) {
+        return {
+          userId: friend.id,
+          name: friend.name,
+        };
+      }
+    })
+  );
+
+  res.send(friendsArray);
+};
