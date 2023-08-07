@@ -15,7 +15,7 @@ const FormInput = ({
 
   const showPassword = () => {
     setShow(!show);
-    console.log(show);
+    // console.log(show);
   };
 
   return (
@@ -30,7 +30,7 @@ const FormInput = ({
         id={name}
         {...rest}
         maxLength={name === "Enter OTP" ? 6 : null}
-        required
+        // required
       />
       <label
         htmlFor={name}
@@ -43,15 +43,9 @@ const FormInput = ({
         className={`absolute top-1/2 right-3 translate-y-1/2 text-gray-500 cursor-pointer`}
         onClick={showPassword}
       >
-<<<<<<< HEAD
-        {name === "password" && show === true ? (
+        {type === "password" && show === true ? (
           <AiFillEyeInvisible />
-        ) : name === "password" && show === false ? (
-=======
-        {type === 'password' && show === true ? (
-          <AiFillEyeInvisible />
-        ) : type === 'password' && show === false ? (
->>>>>>> e99dbd2f921679cf3e712af1a42c73ffe2496a9c
+        ) : type === "password" && show === false ? (
           <AiFillEye />
         ) : (
           ""

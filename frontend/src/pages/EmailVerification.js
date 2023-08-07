@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import { emailVerification } from "../api/auth";
 import { AuthContext } from "../context/AuthProvider";
 import { NotificationContext } from "../context/NotificationProvider";
+import { resendEmailVerificationToken } from "../api/auth";
 
 const EmailVerification = () => {
   const navigate = useNavigate();
@@ -16,9 +17,16 @@ const EmailVerification = () => {
   const { authInfo, isAuth } = useContext(AuthContext);
   const { isLoggedIn } = authInfo;
 
-  console.log(location.state);
+  // console.log(location.state);
 
   const [otp, setOtp] = useState();
+
+  const validateOtp = (userInput) => {
+    if (!otp) return { ok: false, err: "OTP is missing" };
+    if (otp.length < 6)
+      return { ok: false, err: "OTP must be atleast 6 characters" };
+    return { ok: true };
+  };
 
   // console.log(inputData);
 
@@ -31,6 +39,9 @@ const EmailVerification = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const { ok, err } = validateOtp(otp);
+    if (!ok) return updateNotification("error", err);
 
     const payload = {
       otp,
@@ -46,12 +57,23 @@ const EmailVerification = () => {
     isAuth();
   };
 
+  const handleResubmit = async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      userId: location.state.userId,
+    };
+
+    const { error, message } =  await resendEmailVerificationToken(payload);
+    if (error) return updateNotification("error", error)
+    updateNotification("success", message);
+  };
+
   useEffect(() => {
     if (!location.state?.userId) navigate("/auth/sign-in");
 
     if (isLoggedIn) navigate("/");
-  }, [isLoggedIn])
-;
+  }, [isLoggedIn]);
 
   return (
     <div className="flex w-screen h-screen items-center justify-center overflow-hidden">
@@ -73,6 +95,13 @@ const EmailVerification = () => {
               value={otp}
               onChange={handleChange}
             />
+            <Link
+              // to="/auth/resend-email-verification-token"
+              onClick={handleResubmit}
+              className="text-gray-500 hover:text-blue-600 hover:underline text-sm transition"
+            >
+              Resend OTP
+            </Link>
 
             <Button
               title="Submit OTP"

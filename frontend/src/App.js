@@ -4,14 +4,20 @@ import About from "./pages/About";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import EmailVerification from "./pages/EmailVerification";
+import ForgetPassword from "./pages/ForgetPassword";
+import ResetPassword from "./pages/ResetPassword";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
     <Routes>
+      <Route path="*" element={<NotFound />} />
       <Route path="/" element={<Home />} />
       <Route path="/auth/sign-in" element={<Login />} />
       <Route path="/auth/signup" element={<Signup />} />
       <Route path="/auth/about" element={<About />} />
+      <Route path="/auth/forget-password" element={<ForgetPassword />} />
+      <Route path="/auth/reset-password" element={<ResetPassword />} />
       <Route path="/auth/OtpVerification" element={<EmailVerification />} />
     </Routes>
   );
