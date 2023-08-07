@@ -1,19 +1,11 @@
-<<<<<<< HEAD
-import FormSideDetails from "../components/Form/FormSideDetails";
-import FormInput from "../components/Form/FormInput";
-import Button from "../components/Button";
-import { Link, useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { signUpUser } from "../api/auth";
-import { NotificationContext } from "../context/NotificationProvider";
-import { AuthContext } from "../context/AuthProvider";
-=======
 import FormSideDetails from '../components/Form/FormSideDetails';
 import FormInput from '../components/Form/FormInput';
 import Button from '../components/Button';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
->>>>>>> e99dbd2f921679cf3e712af1a42c73ffe2496a9c
+import { Link, useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { signUpUser } from '../api/auth';
+import { NotificationContext } from '../context/NotificationProvider';
+import { AuthContext } from '../context/AuthProvider';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -48,11 +40,11 @@ const Signup = () => {
     };
 
     const { error, user } = await signUpUser(payload);
-    if (error) return updateNotification("error", error);
+    if (error) return updateNotification('error', error);
 
     console.log(user);
 
-    navigate("/auth/OtpVerification", {
+    navigate('/auth/OtpVerification', {
       state: {
         userId: user.id,
       },
@@ -62,7 +54,7 @@ const Signup = () => {
   };
 
   useEffect(() => {
-    if (isLoggedIn) navigate("/");
+    if (isLoggedIn) navigate('/');
   }, [isLoggedIn]);
 
   return (
@@ -77,11 +69,7 @@ const Signup = () => {
           <p className='my-8 mt-4 max-w-[350px] lg:max-w-[400px] text-center'>
             Signup for Mero Pay. Your complete expense Tracker
           </p>
-<<<<<<< HEAD
-          <form onSubmit={handleSubmit}>
-=======
           <form onSubmit={handleSubmit} className='w-11/12  p-4 md:p-0'>
->>>>>>> e99dbd2f921679cf3e712af1a42c73ffe2496a9c
             <FormInput
               placeholder='lamaleon213'
               type='text'
