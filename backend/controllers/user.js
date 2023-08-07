@@ -2,9 +2,10 @@ const { isValidObjectId } = require('mongoose');
 const jwt = require('jsonwebtoken');
 
 const EmailVerificationToken = require('../models/emailVerificationToken');
+const PasswordResetToken = require('../models/passwordResetToken');
 const User = require('../models/user');
 
-const { sendError } = require('../utils/helper');
+const { sendError, generateRandomByte } = require('../utils/helper');
 const { generateOTP, generateMailTransporter } = require('../utils/mail');
 
 exports.create = async (req, res) => {
@@ -188,6 +189,41 @@ exports.forgetPassword = async (req, res) => {
   });
 
   res.json({ message: 'Reset link sent to your email' });
+};
+
+exports.sendRequestPasswordTokenStatus = (req, res) => {
+  res.json({ valid: true });
+};
+
+exports.resetPassword = async (req, res) => {
+  const { newPassword, userId } = req.body;
+
+  const user = await User.findById(userId);
+  if (!user) return sendError(res, 'User not Found', 404);
+  const matchedPass = await user.comparePass(newPassword);
+
+  if (matchedPass)
+    return sendError(
+      res,
+      'The new password must be different than the old one'
+    );
+
+  user.password = newPassword;
+  await user.save();
+
+  await PasswordResetToken.findByIdAndDelete(req.resetToken._id);
+
+  var transport = generateMailTransporter();
+
+  transport.sendMail({
+    form: 'security@ourapp.com',
+    to: user.email,
+    subject: 'Reset Password Successful',
+    html: `<p>Your password is successfully changed</p>
+    `,
+  });
+
+  res.json({ message: 'Password changed successfully' });
 };
 
 exports.singIn = async (req, res) => {

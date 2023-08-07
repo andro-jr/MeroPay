@@ -18,8 +18,8 @@ exports.validatePassword = [
     .not()
     .isEmpty()
     .withMessage('Password is missing')
-    .isLength({ min: 3, max: 20 })
-    .withMessage('Password must be between 3 to 20 characters'),
+    .isLength({ min: 8, max: 20 })
+    .withMessage('Password must be between 8 to 20 characters'),
 ];
 
 exports.signValidate = [
