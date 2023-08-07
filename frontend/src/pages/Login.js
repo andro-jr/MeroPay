@@ -70,7 +70,7 @@ const Home = () => {
               onChange={handleChange}
             />
             <span className='text-sm first-letter text-gray-400 hover:text-blue-600 transition-all duration-0 hover:duration-50 ease-in-out hover:underline'>
-              <Link to='/forgot-password'>Forgot password?</Link>
+              <Link to='/auth/forget-password'>Forgot password?</Link>
             </span>
             <Button
               title='Login'

@@ -36,16 +36,22 @@ const FormInput = ({
         htmlFor={name}
         className="form__label peer-focus:text-blue-600 transition"
       >
-        {name}
+        {label || name}
       </label>
 
       <label
         className={`absolute top-1/2 right-3 translate-y-1/2 text-gray-500 cursor-pointer`}
         onClick={showPassword}
       >
+<<<<<<< HEAD
         {name === "password" && show === true ? (
           <AiFillEyeInvisible />
         ) : name === "password" && show === false ? (
+=======
+        {type === 'password' && show === true ? (
+          <AiFillEyeInvisible />
+        ) : type === 'password' && show === false ? (
+>>>>>>> e99dbd2f921679cf3e712af1a42c73ffe2496a9c
           <AiFillEye />
         ) : (
           ""

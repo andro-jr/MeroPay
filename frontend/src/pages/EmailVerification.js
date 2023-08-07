@@ -9,7 +9,7 @@ import { emailVerification } from "../api/auth";
 import { AuthContext } from "../context/AuthProvider";
 import { NotificationContext } from "../context/NotificationProvider";
 
-const OtpVerification = () => {
+const EmailVerification = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { updateNotification } = useContext(NotificationContext);
@@ -85,4 +85,4 @@ const OtpVerification = () => {
   );
 };
 
-export default OtpVerification;
+export default EmailVerification;
