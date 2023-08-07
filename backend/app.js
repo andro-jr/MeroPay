@@ -8,6 +8,7 @@ require('express-async-errors');
 
 dotenv.config();
 const userRouter = require('./routes/user');
+const friendRouter = require('./routes/friend');
 const { handleNotFound } = require('./utils/helper');
 app.use(express.json());
 app.use(morgan('dev'));
@@ -19,6 +20,7 @@ const PORT = process.env.PORT || 8000;
 app.use(cors());
 
 app.use('/api/user', userRouter);
+app.use('/api/friend', friendRouter);
 
 app.use('/*', handleNotFound);
 

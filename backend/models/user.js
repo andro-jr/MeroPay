@@ -29,12 +29,12 @@ const userSchema = mongoose.Schema({
     public_id: String,
   },
   friends: {
-    type: Object,
-    friend_id: String,
+    type: Array,
+    default: [],
   },
   pendingFriends: {
-    type: Object,
-    friend_id: String,
+    type: Array,
+    default: [],
   },
 });
 
