@@ -16,6 +16,11 @@ const Home = () => {
   // console.log(id);
   // console.log(authInfo);
 
+  console.log(authInfo);
+
+  const isVerified = authInfo.profile?.isVerified;
+  console.log(isVerified);
+
   useEffect(() => {
     if (!isLoggedIn) navigate("/auth/sign-in");
     else if (isLoggedIn && !isVerified) {

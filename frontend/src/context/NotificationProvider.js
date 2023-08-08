@@ -36,11 +36,13 @@ const NotificationProvider = ({ children }) => {
     >
       {children}
       {notification && (
-        <div className='fixed left-1/2  -translate-x-1/2 top-20 px-4 py-1 '>
-          <div className={classes + 'bounce rounded font-semibold border-b-2'}>
-            <p className='text-white px-4 py-2 bounce text-center'>
-              {notification}
-            </p>
+        <div className='fixed left-1/2  -translate-x-1/2 top-14 px-4 py-1 '>
+          <div
+            className={
+              classes + 'bounce-in-top rounded font-semibold border-b-2'
+            }
+          >
+            <p className='text-white px-4 py-2 text-center'>{notification}</p>
           </div>
         </div>
       )}

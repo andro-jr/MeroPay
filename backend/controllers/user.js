@@ -7,6 +7,7 @@ const User = require('../models/user');
 
 const { sendError, generateRandomByte } = require('../utils/helper');
 const { generateOTP, generateMailTransporter } = require('../utils/mail');
+const { otpTemplate } = require('../emailtemplates/otpEmailTemplate');
 
 exports.create = async (req, res) => {
   const { name, email, password } = req.body;
@@ -37,9 +38,10 @@ exports.create = async (req, res) => {
     form: 'verification@ourapp.com',
     to: newUser.email,
     subject: 'Email Verification',
-    html: `<p>Your verification OTP</p>
-    <h1>${otp}</h1>
-    `,
+    // html: `<p>Your verification OTP</p>
+    // <h1>${otp}</h1>
+    // `,
+    html: otpTemplate(otp),
   });
 
   res.status(201).json({
@@ -145,9 +147,10 @@ exports.resendEmailVerificationToken = async (req, res) => {
     form: 'verification@ourapp.com',
     to: user.email,
     subject: 'Email Verification',
-    html: `<p>Your verification OTP</p>
-    <h1>${otp}</h1>
-    `,
+    // html: `<p>Your verification OTP</p>
+    // <h1>${otp}</h1>
+    // `,
+    html: otpTemplate(otp),
   });
 
   res.json({ message: 'New Otp has been sent to your email' });
