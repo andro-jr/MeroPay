@@ -18,7 +18,7 @@ const Home = () => {
 
   console.log(authInfo);
 
-  const isVerified = authInfo.profile?.isVerified;
+  // const isVerified = authInfo.profile?.isVerified;
   console.log(isVerified);
 
   useEffect(() => {
