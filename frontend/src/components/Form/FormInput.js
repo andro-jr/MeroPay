@@ -30,7 +30,6 @@ const FormInput = ({
         id={name}
         {...rest}
         maxLength={name === "Enter OTP" ? 6 : null}
-        required
       />
       <label
         htmlFor={name}

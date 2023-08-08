@@ -24,8 +24,19 @@ const Signup = () => {
   const validateUserInput = (userInput) => {
     const { username, email, password } = userInput;
     const isValidEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
-    if (!username.trim()) return { ok: false, err: "Name is missing" };
+    function containsSpecialChars(str) {
+      const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+      return specialChars.test(str);
+    }
+
+    if (!username) return { ok: false, err: "Name is missing" };
+    if (containsSpecialChars(username) || username.includes(" "))
+      return {
+        ok: false,
+        err: "Username cannot contain space any special characters.",
+      };
     if (!email.trim()) return { ok: false, err: "Email is missing" };
     if (!isValidEmail.test(email))
       return { ok: false, err: "Email is invalid" };

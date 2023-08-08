@@ -16,6 +16,7 @@ const EmailVerification = () => {
   const { updateNotification } = useContext(NotificationContext);
   const { authInfo, isAuth } = useContext(AuthContext);
   const { isLoggedIn } = authInfo;
+  const { isVerified } = authInfo;
 
   // console.log(location.state);
 
@@ -54,27 +55,30 @@ const EmailVerification = () => {
     updateNotification("success", message);
     localStorage.setItem("auth-token", user.token);
 
+    console.log("ghar jum")
     isAuth();
+    navigate("/");
   };
 
   const handleResubmit = async (e) => {
     e.preventDefault();
+    setOtp();
 
     const payload = {
       userId: location.state.userId,
     };
 
-    const { error, message } =  await resendEmailVerificationToken(payload);
-    if (error) return updateNotification("error", error)
+    const { error, message } = await resendEmailVerificationToken(payload);
+    if (error) return updateNotification("error", error);
     updateNotification("success", message);
   };
 
   useEffect(() => {
     if (!location.state?.userId) navigate("/auth/sign-in");
 
-    if (isLoggedIn) navigate("/");
+    else if (isLoggedIn && isVerified) navigate("/");
   }, [isLoggedIn]);
-
+ 
   return (
     <div className="flex w-screen h-screen items-center justify-center overflow-hidden">
       <div className="container max-w-[1300px] m-auto login min-h-[70vh]">

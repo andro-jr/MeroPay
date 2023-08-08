@@ -11,6 +11,8 @@
     #c0c0c0 50%,
     #ffffff 100%
   );
+  --blue-text: @apply bg-blue-600;
+  --blue-background: @apply text-blue-600;
 }
 
 body {
