@@ -7,14 +7,13 @@ import EmailVerification from "./pages/EmailVerification";
 import ForgetPassword from "./pages/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
-import VerifyUser from "./pages/VerifyUser";
 
 const App = () => {
   return (
     <Routes>
       <Route path="*" element={<NotFound />} />
       <Route path="/" element={<Home />} />
-      <Route path="/auth/verify-user" element={<VerifyUser />} />
+      {/* <Route path="/auth/verify-user" element={<VerifyUser />} /> */}
       <Route path="/auth/sign-in" element={<Login />} />
       <Route path="/auth/signup" element={<Signup />} />
       <Route path="/auth/about" element={<About />} />
