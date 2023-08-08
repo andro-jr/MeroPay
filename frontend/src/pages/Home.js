@@ -9,6 +9,11 @@ const Home = () => {
   const { authInfo, handleLogout } = useContext(AuthContext);
   const { isLoggedIn } = authInfo;
 
+  console.log(authInfo);
+
+  const isVerified = authInfo.profile?.isVerified;
+  console.log(isVerified);
+
   useEffect(() => {
     if (!isLoggedIn) navigate('/auth/sign-in');
   }, [isLoggedIn]);
