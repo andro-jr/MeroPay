@@ -36,6 +36,14 @@ const userSchema = mongoose.Schema({
     type: Array,
     default: [],
   },
+  expensesCreated: {
+    type: Array,
+    default: [],
+  },
+  expensesIncluded: {
+    type: Array,
+    default: [],
+  },
 });
 
 userSchema.pre('save', async function (next) {
