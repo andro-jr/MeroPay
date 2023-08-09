@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { signUpUser } from "../api/auth";
 import { NotificationContext } from "../context/NotificationProvider";
 import { AuthContext } from "../context/AuthProvider";
+import Container from "../components/Container";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -87,7 +88,7 @@ const Signup = () => {
   }, [isLoggedIn]);
 
   return (
-    <div className="flex w-screen h-screen items-center justify-center overflow-hidden">
+    <Container>
       <div className="container max-w-[1300px] m-auto login min-h-[70vh]">
         <FormSideDetails />
 
@@ -141,7 +142,7 @@ const Signup = () => {
           </form>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

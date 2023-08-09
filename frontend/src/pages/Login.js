@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import FormSideDetails from "../components/Form/FormSideDetails";
 import { AuthContext } from "../context/AuthProvider";
 import { NotificationContext } from "../context/NotificationProvider";
+import Container from "../components/Container";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ const Login = () => {
   }, [isLoggedIn]);
 
   return (
-    <div className="flex w-screen h-screen items-center justify-center">
+    <Container>
       <div className="container max-w-[1200px] m-auto login min-h-[70vh]">
         <FormSideDetails />
 
@@ -107,7 +108,7 @@ const Login = () => {
           </form>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 
