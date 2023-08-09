@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,13 +11,18 @@
     #c0c0c0 50%,
     #ffffff 100%
   );
+  --gray: rgb(193, 193, 193);
+  --light-gray: rgb(248, 247, 247);
+  --dark-gray: rgb(159, 159, 159);
+  --dark-blue: #0f5298;
+  --blue: rgb(0, 135, 245);
   --blue-text: @apply bg-blue-600;
   --blue-background: @apply text-blue-600;
 }
 
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .login {
@@ -39,7 +44,7 @@ body {
 }
 
 .input__field:focus {
-  border-left: 3px solid rgb(0, 135, 245);
+  border-left: 3px solid var(--blue);
 }
 
 .form__label {
@@ -79,11 +84,11 @@ body {
   overflow: hidden;
 }
 .custom_primary_button::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -300%;
   left: 0;
-  background: #0f5298;
+  background: var(--dark-blue);
   width: 100%;
   height: 200%;
   transform: skewY(168deg);
@@ -91,11 +96,11 @@ body {
   z-index: 1;
 }
 .custom_primary_button::after {
-  content: '';
+  content: "";
   position: absolute;
   top: -300%;
   right: 0;
-  background: #0f5298;
+  background: var(--dark-blue);
   width: 100%;
   height: 200%;
   transform: skewY(-192deg);
@@ -222,4 +227,158 @@ input:-webkit-autofill:active {
   100% {
     transform: translateX(0);
   }
+}
+
+/* ----------------------- navbar ----------------------  */
+
+.navbar {
+  background-color: white;
+}
+
+.nav-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  padding: 1rem 8.75rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@media only screen and (max-width: 912px) {
+  .navbar {
+    padding: 1rem 1rem;
+  }
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.5rem;
+  position: relative;
+}
+
+.search-bar input {
+  max-width: 80%;
+  min-width: 80%;
+  padding: 1rem 1rem;
+  /* border: 1px solid gray; */
+  border-radius: 50px;
+  padding-left: 3.5rem;
+  position: relative;
+  background-color: rgb(248, 247, 247);
+}
+
+.search-bar input:focus {
+  outline: none;
+}
+
+.search-bar input::placeholder {
+  color: var(--gray);
+}
+
+.account {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.account-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.4375rem;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  overflow: hidden;
+  /* border: 1px solid red; */
+}
+.account-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ------------------------ homepage -------------------------- */
+
+.homepage {
+  /* display: grid; */
+  /* grid-template-columns: 1fr 2fr 1fr; */
+  background-color: rgb(244, 244, 244);
+  padding: 0 140px;
+  gap: 2rem;
+  padding-top: 1rem;
+  /* border: 1px solid green; */
+}
+.home-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 2rem;
+}
+
+.profile {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  align-items: center;
+}
+
+.profile-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.avatar-info {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid red; */
+  width: fit-content;
+}
+
+.avatar-info p {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.avatar-info span {
+  font-size: small;
+  color: var(--dark-gray);
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.active {
+  border-left: 5px solid var(--blue);
+  background-color: var(--light-gray);
+}
+
+.dash-option{
+  transition: 0.2s all cubic-bezier(0.075, 0.82, 0.165, 1);
+  cursor: pointer;
+}
+
+.dash-option:hover {
+  background-color: var(--light-gray);
+  
 }
