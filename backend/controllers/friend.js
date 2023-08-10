@@ -138,6 +138,7 @@ exports.getPendingRequests = async (req, res) => {
         return {
           userId: friend.id,
           name: friend.name,
+          avatar: friend.avatar.url,
           email: friend.email,
         };
       }
@@ -149,8 +150,6 @@ exports.getPendingRequests = async (req, res) => {
 
 exports.getAllFriends = async (req, res) => {
   const { userId } = req.params;
-
-  console.log(userId);
 
   if (!isValidObjectId(userId)) return sendError(res, 'Invalid Request');
 
@@ -167,6 +166,7 @@ exports.getAllFriends = async (req, res) => {
           userId: friend.id,
           name: friend.name,
           email: friend.email,
+          avatar: friend.avatar.url,
         };
       }
     })
@@ -178,8 +178,6 @@ exports.getAllFriends = async (req, res) => {
 exports.searchFriend = async (req, res) => {
   const { query } = req;
   const { userId } = query;
-
-  console.log(query, userId);
 
   if (!isValidObjectId(userId)) return sendError(res, 'Invalid Request');
 
@@ -198,6 +196,7 @@ exports.searchFriend = async (req, res) => {
     user: {
       name: friend.name,
       email: friend.email,
+      avatar: friend.avatar.url,
       isAlreadyFriend,
       requestAlreadySent,
       requestAlreadyReceived,

@@ -41,19 +41,24 @@ const FriendsList = () => {
         </div>
 
         <div className='friends-list'>
-          {friends.length > 0 &&
+          {friends.length > 0 ? (
             friends.map((friend, index) => {
               if (index < 3) {
                 return (
                   <FriendsProfile
                     key={index}
-                    avatar={friend.name}
+                    avatar={friend.avatar}
                     name={friend.name}
                     email={friend.email}
                   />
                 );
               }
-            })}
+            })
+          ) : (
+            <div className='text-sm text-gray-300 text-center'>
+              You introvert have no friends
+            </div>
+          )}
         </div>
       </DashboardContainer>
 
@@ -63,20 +68,25 @@ const FriendsList = () => {
           <DashLink>view all</DashLink>
         </div>
         <div className='request-container'>
-          {pendingFriends.length > 0 &&
+          {pendingFriends.length > 0 ? (
             pendingFriends.map((friend, index) => {
               if (index < 2) {
                 return (
                   <FriendsRequest
                     key={index}
                     id={friend.userId}
-                    avatar={friend.name}
+                    avatar={friend.avatar}
                     name={friend.name}
                     email={friend.email}
                   />
                 );
               }
-            })}
+            })
+          ) : (
+            <div className='text-sm text-gray-300 text-center'>
+              No one likes you
+            </div>
+          )}
         </div>
       </DashboardContainer>
     </div>
