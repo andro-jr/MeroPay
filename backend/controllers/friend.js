@@ -140,15 +140,15 @@ exports.getAllFriends = async (req, res) => {
 
 exports.searchFriend = async (req, res) => {
   const { query } = req;
-  const { userId } = req.body;
+  const { userId } = query;
+
+  console.log(query, userId);
 
   if (!isValidObjectId(userId)) return sendError(res, 'Invalid Request');
 
   // const result = await Actor.find({ $text: { $search: `"${query.name}"` } });
   const result = await User.find({ $text: { $search: `"${query.name}"` } });
   if (result.length === 0) return sendError(res, 'User Not Found', 404);
-
-  console.log(result);
 
   const [friend] = result;
   const isAlreadyFriend = friend.friends.includes(userId) ? true : false;
@@ -158,9 +158,12 @@ exports.searchFriend = async (req, res) => {
     : false;
 
   res.send({
-    result,
-    isAlreadyFriend,
-    requestAlreadySent,
-    requestAlreadyReceived,
+    user: {
+      name: friend.name,
+      email: friend.email,
+      isAlreadyFriend,
+      requestAlreadySent,
+      requestAlreadyReceived,
+    },
   });
 };
