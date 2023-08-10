@@ -5,17 +5,28 @@
 
 :root {
   --white: #ffffff;
+  --black: #312e2e;
   --gray__gradient: linear-gradient(
     0deg,
     #ffffff 0%,
     #c0c0c0 50%,
     #ffffff 100%
   );
+  --color-lightest: #fff4e6;
+  --color-light: #ffe8cc;
+  --color-medium: #ffa94d;
+  --color-dark: #ff922b;
+
+  --yellow: #d79922;
+  --dark-blue: #4056a1;
+  --red: #f13c20;
+  --pale: #efe2ba;
+
   --gray: rgb(193, 193, 193);
   --light-gray: rgb(248, 247, 247);
   --dark-gray: rgb(159, 159, 159);
-  --dark-blue: #0f5298;
-  --blue: rgb(0, 135, 245);
+  /* --dark-blue: #0f5298; */
+  /* --blue: rgb(0, 135, 245); */
   --blue-text: @apply bg-blue-600;
   --blue-background: @apply text-blue-600;
 }
@@ -82,7 +93,47 @@ body {
 .custom_primary_button {
   position: relative;
   overflow: hidden;
+  background-color: var(--red);
 }
+.custom_secondary_button {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--gray);
+  color: black;
+}
+
+.custom_secondary_button::before {
+  content: '';
+  position: absolute;
+  bottom: -300%;
+  left: 0;
+  background: var(--dark-gray);
+  width: 100%;
+  height: 200%;
+  transform: skewY(168deg);
+  transition: all 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+  z-index: 1;
+}
+.custom_secondary_button::after {
+  content: '';
+  position: absolute;
+  top: -300%;
+  right: 0;
+  background: var(--dark-gray);
+  width: 100%;
+  height: 200%;
+  transform: skewY(-192deg);
+  transition: all 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+  z-index: 1;
+}
+
+.custom_secondary_button:hover::before {
+  bottom: -100%;
+}
+.custom_secondary_button:hover::after {
+  top: -100%;
+}
+
 .custom_primary_button::before {
   content: '';
   position: absolute;
@@ -113,11 +164,20 @@ body {
 .custom_primary_button:hover::after {
   top: -100%;
 }
-.custom_primary_button .button_text {
+
+.custom_primary_button .button_text,
+.custom_secondary_button .button_text {
   z-index: 2;
   position: relative;
 }
 
+.active-icon {
+  color: var(--red);
+}
+
+.active-text {
+  color: var(--red);
+}
 /* Loader */
 
 .lds-ring {
@@ -233,6 +293,10 @@ input:-webkit-autofill:active {
 
 .navbar {
   background-color: white;
+}
+
+.logo-text {
+  color: var(--red);
 }
 
 .nav-container {
@@ -352,9 +416,10 @@ input:-webkit-autofill:active {
   width: fit-content;
 }
 
-.avatar-info p {
-  font-weight: 600;
+.avatar-info > p {
+  font-weight: 500;
   text-transform: capitalize;
+  color: var(--black);
 }
 
 .avatar-info span {
@@ -369,7 +434,7 @@ input:-webkit-autofill:active {
 }
 
 .active {
-  border-left: 5px solid var(--blue);
+  border-left: 5px solid var(--red);
   background-color: var(--light-gray);
 }
 
@@ -394,4 +459,65 @@ input:-webkit-autofill:active {
   width: 2px;
   height: 60%;
   background: var(--light-gray);
+}
+
+.profile-friend {
+  display: flex;
+  gap: 1rem;
+  /* padding: 1rem; */
+  align-items: center;
+}
+
+.profile-friendRequest {
+  display: flex;
+  gap: 1rem;
+  /* padding: 1rem; */
+  align-items: flex-start;
+}
+
+/* friends column  */
+
+.friends-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.friends-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.friends-title::after {
+  content: '';
+  width: 100%;
+  height: 1.5px;
+  position: absolute;
+  top: 115%;
+  border-radius: 10px;
+  left: 0;
+  background-color: var(--dark-gray);
+}
+
+.request-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.avatar-info {
+  width: 100%;
+}
+
+.decision-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* border: 1px solid green; */
+  width: 100%;
+  margin-top: 0.5rem;
 }

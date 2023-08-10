@@ -1,8 +1,9 @@
 import React from 'react'
+import DashboardContainer from '../DashboardContainer'
 
 const HomeContents = () => {
   return (
-    <div>HomeContents</div>
+    <DashboardContainer>HomeContents</DashboardContainer>
   )
 }
 

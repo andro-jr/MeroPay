@@ -1,8 +1,9 @@
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Logout from './Logout';
-import DashboardOption from './DashboardOption';
-import { AuthContext } from '../context/AuthProvider';
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import Logout from "./Logout";
+import DashboardOption from "./DashboardOption";
+import { AuthContext } from "../context/AuthProvider";
+import Profile from "./OwnProfile";
 
 const Sidebar = () => {
   const [active, setActive] = useState(true);
@@ -18,26 +19,12 @@ const Sidebar = () => {
   };
 
   return (
-    <div className='sidebar flex flex-col gap-4'>
-      <div className='bg-white rounded-xl'>
-        <div className='profile'>
-          <div className='profile-avatar'>
-            <Link to='/'>
-              <img src='/avatar.jpg' alt='profile-avatar' />
-            </Link>
-          </div>
-          <div className='avatar-info'>
-            <p>
-              <Link to='/'>{username}</Link>
-            </p>
-            <span>
-              <Link to='/'>{useremail}</Link>
-            </span>
-          </div>
-        </div>
+    <div className="sidebar flex flex-col gap-4">
+      <div className="bg-white rounded-xl">
+        <Profile name={username} email={useremail} />
       </div>
-      <div className='flex flex-col justify-between min-h-[60vh]'>
-        <div className='dashboard bg-white rounded-xl'>
+      <div className="flex flex-col justify-between min-h-[60vh]">
+        <div className="dashboard bg-white rounded-xl">
           <DashboardOption />
         </div>
         <div>
