@@ -32,7 +32,11 @@ const userSchema = mongoose.Schema({
     type: Array,
     default: [],
   },
-  pendingFriends: {
+  sentRequest: {
+    type: Array,
+    default: [],
+  },
+  receivedRequest: {
     type: Array,
     default: [],
   },

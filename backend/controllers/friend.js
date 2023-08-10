@@ -18,14 +18,14 @@ exports.addFriend = async (req, res) => {
   const friend = await User.findById(friendId);
   if (!friend) return sendError(res, 'Friend not found', 404);
 
-  if (user.pendingFriends.includes(friendId))
+  if (user.sentRequest.includes(friendId))
     return sendError(res, 'Request is already pending');
 
   if (user.friends.includes(friendId))
     return sendError(res, 'Friend already exists');
 
-  await user.pendingFriends.push(friendId);
-  await friend.pendingFriends.push(userId);
+  await user.sentRequest.push(friendId);
+  await friend.receivedRequest.push(userId);
 
   user.save();
   friend.save();
