@@ -64,7 +64,7 @@ const Login = () => {
         <FormSideDetails />
 
         <div className="flex flex-col items-center my-auto pl:0 xl:pl-20">
-          <h3 className="text-4xl text-blue-600 font-bold mt-0 md:mt-10">
+          <h3 className="text-4xl text-red-500 font-bold mt-0 md:mt-10">
             Log in to Mero Pay
           </h3>
           <p className="mb-8 mt-4 max-w-[350px] text-center">
@@ -85,7 +85,7 @@ const Login = () => {
               value={inputData}
               onChange={handleChange}
             />
-            <span className="text-sm first-letter text-gray-400 hover:text-blue-600 transition-all duration-0 hover:duration-50 ease-in-out hover:underline">
+            <span className="text-sm first-letter text-gray-400 hover:text-red-400 transition-all duration-0 hover:duration-50 ease-in-out hover:underline">
               <Link to="/auth/forget-password">Forgot password?</Link>
             </span>
             <Button
@@ -100,7 +100,7 @@ const Login = () => {
               <p>New to MeroPay?</p>
               <Link
                 to="/auth/signup"
-                className=" hover:text-blue-600 transition-all duration-0 hover:duration-50 ease-in-out hover:underline"
+                className=" hover:text-red-600 transition-all duration-0 hover:duration-50 ease-in-out hover:underline"
               >
                 Create Account
               </Link>

@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import DashboardContainer from "../DashboardContainer";
 
 const ReceiveExpenses = () => {
-  return (
-    <div>ReceiveExpenses</div>
-  )
-}
+  return <DashboardContainer>ReceiveExpenses</DashboardContainer>;
+};
 
-export default ReceiveExpenses
+export default ReceiveExpenses;

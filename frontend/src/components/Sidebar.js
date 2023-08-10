@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Logout from "./Logout";
 import DashboardOption from "./DashboardOption";
+import Profile from "./OwnProfile";
 
 const Sidebar = () => {
   const [active, setActive] = useState(true);
@@ -15,21 +16,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar flex flex-col gap-4">
       <div className="bg-white rounded-xl">
-        <div className="profile">
-          <div className="profile-avatar">
-            <Link to="/">
-              <img src="/avatar.jpg" alt="profile-avatar" />
-            </Link>
-          </div>
-          <div className="avatar-info">
-            <p>
-              <Link to="/">leon lama</Link>
-            </p>
-            <span>
-              <Link to="/">email@email.com</Link>
-            </span>
-          </div>
-        </div>
+        <Profile />
       </div>
       <div className="flex flex-col justify-between min-h-[60vh]">
         <div className="dashboard bg-white rounded-xl">

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { IoHomeOutline } from "react-icons/io5";
-import { GiMoneyStack, GiPayMoney } from "react-icons/gi";
+import { IoHome } from "react-icons/io5";
+import {GiReceiveMoney,  GiMoneyStack, GiPayMoney } from "react-icons/gi";
 import { AiTwotoneSetting } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { TabContext } from "../context/TabProvider";
@@ -20,13 +20,13 @@ const DashboardOption = (to) => {
   const dashboardOptions = [
     {
       name: "home",
-      icon: <IoHomeOutline />,
+      icon: <IoHome />,
       optionName: "Home",
       to: "/",
     },
     {
       name: "incomming",
-      icon: <GiMoneyStack />,
+      icon: <GiReceiveMoney />,
       optionName: "To Receive",
       to: "/expense/to-receive",
     },
@@ -55,12 +55,12 @@ const DashboardOption = (to) => {
             onClick={() => toggle(index)}
           >
             <p
-              className={`text-2xl ml-2 `}
+              className={`text-2xl ml-2 ${tabIndex===index? "active-icon":""}`}
             >
               {option.icon}
             </p>
             <span
-              className={`ml-2`}
+              className={`ml-2 ${tabIndex===index? "active-text":""}`}
             >
               {option.optionName}
             </span>
