@@ -1,21 +1,15 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const FriendsProfile = () => {
+const FriendsProfile = ({ name, email }) => {
   return (
-    <div className="profile-friend">
-      <div className="profile-avatar">
-        <Link to="/">
-          <img src="/avatar.jpg" alt="profile-avatar" />
-        </Link>
+    <div className='profile-friend'>
+      <div className='profile-avatar'>
+        <img src='/avatar.jpg' alt='profile-avatar' />
       </div>
-      <div className="avatar-info">
-        <p>
-          <Link to="/">leon lama</Link>
-        </p>
-        <span>
-          <Link to="/">email@email.com</Link>
-        </span>
+      <div className='avatar-info'>
+        <p>{name}</p>
+        <span>{email}</span>
       </div>
     </div>
   );

@@ -66,7 +66,7 @@ const Signup = () => {
     if (err) return updateNotification("error", err);
 
     const payload = {
-      name: inputData.username,
+      name: inputData.username.toLowerCase(),
       email: inputData.email,
       password: inputData.password,
     };

@@ -58,4 +58,6 @@ userSchema.methods.comparePass = async function (password) {
   return result;
 };
 
+userSchema.index({ name: 'text' });
+
 module.exports = mongoose.model('User', userSchema);
