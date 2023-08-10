@@ -10,8 +10,10 @@ import Container from "../components/Container";
 const Login = () => {
   const navigate = useNavigate();
 
-  const { authInfo, handleLogin } = useContext(AuthContext);
+  const { authInfo, handleLogin, isPending } = useContext(AuthContext);
   const { isLoggedIn } = authInfo;
+
+  const pending = authInfo.isPending;
 
   const { updateNotification } = useContext(NotificationContext);
 
@@ -60,6 +62,11 @@ const Login = () => {
 
   return (
     <Container>
+      {pending && (
+        <div className="fixed w-full h-screen backdrop-blur-md border-2 z-10">
+          <img src="/paper-plane.gif" alt="" className="h-full " />
+        </div>
+      )}
       <div className="container max-w-[1200px] m-auto login min-h-[70vh]">
         <FormSideDetails />
 
@@ -85,6 +92,7 @@ const Login = () => {
               value={inputData}
               onChange={handleChange}
             />
+
             <span className="text-sm first-letter text-gray-400 hover:text-red-400 transition-all duration-0 hover:duration-50 ease-in-out hover:underline">
               <Link to="/auth/forget-password">Forgot password?</Link>
             </span>

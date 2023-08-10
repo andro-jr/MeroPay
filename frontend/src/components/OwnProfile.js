@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Profile = () => {
+const Profile = ({ name, email }) => {
   return (
     <div className="profile">
       <div className="profile-avatar">
@@ -11,10 +11,10 @@ const Profile = () => {
       </div>
       <div className="avatar-info">
         <p>
-          <Link to="/">leon lama</Link>
+          <Link to="/">{name}</Link>
         </p>
         <span>
-          <Link to="/">email@email.com</Link>
+          <Link to="/">{email}</Link>
         </span>
       </div>
     </div>
