@@ -1,8 +1,11 @@
 import client from "./client";
 
-export const searchFriend = async (userId) => {
+export const searchFriend = async (search, userId) => {
   try {
-    const { data } = await client.get(`/friend/search`);
+    const { data } = await client.get(`/friend/search/?name=${search}`, {
+      userId,
+    });
+
     console.log(data);
     return data;
   } catch (err) {

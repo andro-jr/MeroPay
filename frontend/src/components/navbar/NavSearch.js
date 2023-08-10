@@ -15,16 +15,11 @@ const NavSearch = () => {
     const { value } = e.target;
     setSearch(value);
 
-    const payload = {
-      query: {
-        name: { search },
-      },
-      userId: { userId },
-    };
+    
 
-    console.log(payload);
-    searchFriend(payload);
-    console.log()
+    
+    searchFriend(search, userId);
+    // console.log();
   };
 
   return (
