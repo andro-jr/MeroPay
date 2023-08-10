@@ -25,7 +25,7 @@ const FriendsList = () => {
     setPendingFriends(res);
   };
 
-  console.log(pendingFriends);
+  // console.log(pendingFriends);
 
   useEffect(() => {
     fetchAllFriends(userId);

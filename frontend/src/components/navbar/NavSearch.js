@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { FiSearch } from "react-icons/fi";
+import { AuthContext } from "../../context/AuthProvider";
+import { searchFriend } from "../../api/friend";
 
 const NavSearch = () => {
   const [search, setSearch] = useState("");
+  const { authInfo } = useContext(AuthContext);
+  const { userId } = authInfo;
   console.log(search);
 
   const handleChange = (e) => {
@@ -11,9 +15,11 @@ const NavSearch = () => {
     const { value } = e.target;
     setSearch(value);
 
-    const payload = {
-      
-    }
+    
+
+    
+    searchFriend(search, userId);
+    // console.log();
   };
 
   return (
