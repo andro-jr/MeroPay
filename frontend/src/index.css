@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -22,7 +22,7 @@
 
 body {
   margin: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .login {
@@ -84,7 +84,7 @@ body {
   overflow: hidden;
 }
 .custom_primary_button::before {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -300%;
   left: 0;
@@ -96,7 +96,7 @@ body {
   z-index: 1;
 }
 .custom_primary_button::after {
-  content: "";
+  content: '';
   position: absolute;
   top: -300%;
   right: 0;
@@ -373,12 +373,25 @@ input:-webkit-autofill:active {
   background-color: var(--light-gray);
 }
 
-.dash-option{
+.dash-option {
   transition: 0.2s all cubic-bezier(0.075, 0.82, 0.165, 1);
   cursor: pointer;
 }
 
 .dash-option:hover {
   background-color: var(--light-gray);
-  
+}
+
+.side__border {
+  position: relative;
+}
+.side__border::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 60%;
+  background: var(--light-gray);
 }
