@@ -76,7 +76,7 @@ exports.acceptRequest = async (req, res) => {
 };
 
 exports.getPendingRequests = async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.params;
 
   if (!isValidObjectId(userId)) return sendError(res, 'Invalid Request');
 
@@ -92,6 +92,7 @@ exports.getPendingRequests = async (req, res) => {
         return {
           userId: friend.id,
           name: friend.name,
+          email: friend.email,
         };
       }
     })
@@ -101,7 +102,9 @@ exports.getPendingRequests = async (req, res) => {
 };
 
 exports.getAllFriends = async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.params;
+
+  console.log(userId);
 
   if (!isValidObjectId(userId)) return sendError(res, 'Invalid Request');
 
@@ -117,10 +120,34 @@ exports.getAllFriends = async (req, res) => {
         return {
           userId: friend.id,
           name: friend.name,
+          email: friend.email,
         };
       }
     })
   );
 
   res.send(friendsArray);
+};
+
+exports.searchFriend = async (req, res) => {
+  const { query } = req;
+  const { userId } = req.body;
+
+  if (!isValidObjectId(userId)) return sendError(res, 'Invalid Request');
+
+  // const result = await Actor.find({ $text: { $search: `"${query.name}"` } });
+  const result = await User.find({ $text: { $search: `"${query.name}"` } });
+  if (result.length === 0) return sendError(res, 'User Not Found', 404);
+
+  const [friend] = result;
+  const isAlreadyFriend = friend.friends.includes(userId) ? true : false;
+  const requestAlreadySent = friend.pendingFriends.includes(userId)
+    ? true
+    : false;
+
+  res.send({
+    result,
+    isAlreadyFriend,
+    requestAlreadySent,
+  });
 };
