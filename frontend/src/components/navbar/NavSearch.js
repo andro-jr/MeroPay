@@ -10,6 +10,10 @@ const NavSearch = () => {
     e.preventDefault();
     const { value } = e.target;
     setSearch(value);
+
+    const payload = {
+      
+    }
   };
 
   return (
