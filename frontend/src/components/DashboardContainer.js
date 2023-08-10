@@ -1,7 +1,12 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
-const DashboardContainer = ({ children }) => {
-  return <div className="bg-white border rounded-lg p-4">{children}</div>;
+const DashboardContainer = ({ children, className }) => {
+  return (
+    <div className={twMerge("bg-white border rounded-lg p-4", className)}>
+      {children}
+    </div>
+  );
 };
 
 export default DashboardContainer;

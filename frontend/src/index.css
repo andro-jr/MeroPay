@@ -12,14 +12,15 @@
     #c0c0c0 50%,
     #ffffff 100%
   );
+  --red__gradient: linear-gradient(135deg, #fc6e59 10%, rgb(251, 147, 147) 100%);
   --color-lightest: #fff4e6;
   --color-light: #ffe8cc;
   --color-medium: #ffa94d;
   --color-dark: #ff922b;
-
   --yellow: #d79922;
   --dark-blue: #4056a1;
   --red: #f13c20;
+  --faded-red: #e0d6d4;
   --pale: #efe2ba;
 
   --gray: rgb(193, 193, 193);
