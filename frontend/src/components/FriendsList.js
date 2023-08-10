@@ -8,10 +8,12 @@ import DashSubHead from './DashSubHead';
 import DashLink from './DashLink';
 import { getAllFriends, getPendingFriends } from '../api/friend';
 import { AuthContext } from '../context/AuthProvider';
+import { RefreshDataContext } from '../context/RefreshDataProvider';
 
 const FriendsList = () => {
   const { authInfo } = useContext(AuthContext);
   const userId = authInfo.profile?.id;
+  const { handleRefresh, refreshBool } = useContext(RefreshDataContext);
 
   const [friends, setFriends] = useState([]);
   const [pendingFriends, setPendingFriends] = useState([]);
@@ -25,12 +27,10 @@ const FriendsList = () => {
     setPendingFriends(res);
   };
 
-  // console.log(pendingFriends);
-
   useEffect(() => {
-    fetchAllFriends(userId);
     fetchPendingFriends(userId);
-  }, []);
+    fetchAllFriends(userId);
+  }, [refreshBool]);
 
   return (
     <div className='flex flex-col gap-4'>
@@ -65,10 +65,11 @@ const FriendsList = () => {
         <div className='request-container'>
           {pendingFriends.length > 0 &&
             pendingFriends.map((friend, index) => {
-              if (index < 3) {
+              if (index < 2) {
                 return (
                   <FriendsRequest
                     key={index}
+                    id={friend.userId}
                     avatar={friend.name}
                     name={friend.name}
                     email={friend.email}

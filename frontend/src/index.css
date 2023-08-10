@@ -12,7 +12,11 @@
     #c0c0c0 50%,
     #ffffff 100%
   );
-  --red__gradient: linear-gradient(135deg, #fc6e59 10%, rgb(251, 147, 147) 100%);
+  --red__gradient: linear-gradient(
+    135deg,
+    #fc6e59 10%,
+    rgb(251, 147, 147) 100%
+  );
   --color-lightest: #fff4e6;
   --color-light: #ffe8cc;
   --color-medium: #ffa94d;
@@ -24,6 +28,7 @@
   --pale: #efe2ba;
 
   --gray: rgb(193, 193, 193);
+  --medium-gray: rgb(224, 224, 224);
   --light-gray: rgb(248, 247, 247);
   --dark-gray: rgb(159, 159, 159);
   /* --dark-blue: #0f5298; */
@@ -99,7 +104,7 @@ body {
 .custom_secondary_button {
   position: relative;
   overflow: hidden;
-  background-color: var(--gray);
+  background-color: var(--medium-gray);
   color: black;
 }
 
@@ -108,7 +113,7 @@ body {
   position: absolute;
   bottom: -300%;
   left: 0;
-  background: var(--dark-gray);
+  background: var(--gray);
   width: 100%;
   height: 200%;
   transform: skewY(168deg);
@@ -120,7 +125,7 @@ body {
   position: absolute;
   top: -300%;
   right: 0;
-  background: var(--dark-gray);
+  background: var(--gray);
   width: 100%;
   height: 200%;
   transform: skewY(-192deg);

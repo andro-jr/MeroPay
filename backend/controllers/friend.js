@@ -84,6 +84,43 @@ exports.acceptRequest = async (req, res) => {
   });
 };
 
+exports.rejectRequest = async (req, res) => {
+  const { userId, friendId } = req.body;
+
+  if (
+    !isValidObjectId(userId) ||
+    !isValidObjectId(friendId) ||
+    userId === friendId
+  )
+    return sendError(res, 'Invalid Request');
+
+  const user = await User.findById(userId);
+  if (!user) return sendError(res, 'User not found', 404);
+
+  const friend = await User.findById(friendId);
+  if (!friend) return sendError(res, 'Friend not found', 404);
+
+  if (user.friends.includes(friendId))
+    return sendError(res, 'Friend already exists');
+
+  const friendIndex = user.receivedRequest.indexOf(friendId);
+  if (friendIndex > -1) {
+    user.receivedRequest.splice(friendIndex, 1);
+  }
+
+  const userIndex = friend.sentRequest.indexOf(userId);
+  if (userIndex > -1) {
+    friend.sentRequest.splice(userIndex, 1);
+  }
+
+  user.save();
+  friend.save();
+
+  res.send({
+    message: 'Friend request rejected',
+  });
+};
+
 exports.getPendingRequests = async (req, res) => {
   const { userId } = req.params;
 
