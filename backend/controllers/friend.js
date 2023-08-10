@@ -21,6 +21,15 @@ exports.addFriend = async (req, res) => {
   if (user.sentRequest.includes(friendId))
     return sendError(res, 'Request is already pending');
 
+  if (user.receivedRequest.includes(friendId))
+    return sendError(res, 'Request is already pending');
+
+  if (friend.sentRequest.includes(userId))
+    return sendError(res, 'Request is already pending');
+
+  if (friend.receivedRequest.includes(userId))
+    return sendError(res, 'Request is already pending');
+
   if (user.friends.includes(friendId))
     return sendError(res, 'Friend already exists');
 
@@ -54,14 +63,14 @@ exports.acceptRequest = async (req, res) => {
   if (user.friends.includes(friendId))
     return sendError(res, 'Friend already exists');
 
-  const friendIndex = user.pendingFriends.indexOf(friendId);
+  const friendIndex = user.receivedRequest.indexOf(friendId);
   if (friendIndex > -1) {
-    user.pendingFriends.splice(friendIndex, 1);
+    user.receivedRequest.splice(friendIndex, 1);
   }
 
-  const userIndex = friend.pendingFriends.indexOf(userId);
+  const userIndex = friend.sentRequest.indexOf(userId);
   if (userIndex > -1) {
-    friend.pendingFriends.splice(userIndex, 1);
+    friend.sentRequest.splice(userIndex, 1);
   }
 
   await user.friends.push(friendId);
@@ -83,7 +92,7 @@ exports.getPendingRequests = async (req, res) => {
   const user = await User.findById(userId);
   if (!user) return sendError(res, 'User not found', 404);
 
-  const pendingFriendsData = await user.pendingFriends;
+  const pendingFriendsData = await user.receivedRequest;
 
   const friendsArray = await Promise.all(
     pendingFriendsData.map(async (friendId) => {
@@ -139,9 +148,12 @@ exports.searchFriend = async (req, res) => {
   const result = await User.find({ $text: { $search: `"${query.name}"` } });
   if (result.length === 0) return sendError(res, 'User Not Found', 404);
 
+  console.log(result);
+
   const [friend] = result;
   const isAlreadyFriend = friend.friends.includes(userId) ? true : false;
-  const requestAlreadySent = friend.pendingFriends.includes(userId)
+  const requestAlreadySent = friend.sentRequest.includes(userId) ? true : false;
+  const requestAlreadyReceived = friend.receivedRequest.includes(userId)
     ? true
     : false;
 
@@ -149,5 +161,6 @@ exports.searchFriend = async (req, res) => {
     result,
     isAlreadyFriend,
     requestAlreadySent,
+    requestAlreadyReceived,
   });
 };
