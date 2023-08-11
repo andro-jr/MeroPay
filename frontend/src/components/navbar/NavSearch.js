@@ -16,11 +16,13 @@ const NavSearch = ({}) => {
   const { authInfo } = useContext(AuthContext);
   const userId = authInfo.profile?.id;
   const username = authInfo.profile?.name;
-  
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (containerRef.current && !containerRef.current.contains(event.target)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
         setIsFocused(false);
       }
     };
@@ -32,8 +34,6 @@ const NavSearch = ({}) => {
   }, []);
 
   console.log(searchResult);
-
- 
 
   const handleChange = async (e) => {
     e.preventDefault();
@@ -50,11 +50,6 @@ const NavSearch = ({}) => {
     setIsFocused(true);
   };
 
-  const handleInputBlur = () => {
-    setIsFocused(false);
-  };
-
-
   return (
     <div>
       <div className="search-bar" ref={containerRef}>
@@ -65,7 +60,6 @@ const NavSearch = ({}) => {
             value={search}
             onChange={handleChange}
             onClick={handleInputFocus}
-            // onBlur={handleInputBlur}
           />
           <FiSearch className="absolute top-1/2 left-8 -translate-y-1/2 text-gray-500" />
         </form>
@@ -102,7 +96,12 @@ const NavSearch = ({}) => {
                         <AlreadyFriendsResult />
                       ) : username === user.name ? (
                         ""
-                      ) : <NotFriends />}
+                      ) : (
+                        <NotFriends
+                          friendId={user.id}
+                          requestAlreadyReceived={user.requestAlreadyReceived}
+                        />
+                      )}
                     </div>
                   </div>
                 ))}

@@ -9,7 +9,9 @@ const HomeContents = ({ name }) => {
   // const useremail = authInfo.profile?.email;
   return (
     <div>
-      <DashboardContainer className=""></DashboardContainer>
+      <DashboardContainer className="">
+        HomeContents
+      </DashboardContainer>
     </div>
   );
 };
