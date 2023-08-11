@@ -25,8 +25,10 @@ const userSchema = mongoose.Schema({
   },
   avatar: {
     type: Object,
-    url: String,
-    public_id: String,
+    default: {
+      url: 'https://res.cloudinary.com/dl6kwsl4n/image/upload/v1691680015/user_ykjisp.png',
+      public_id: 'user_ykjisp',
+    },
   },
   friends: {
     type: Array,
@@ -65,3 +67,5 @@ userSchema.methods.comparePass = async function (password) {
 userSchema.index({ name: 'text' });
 
 module.exports = mongoose.model('User', userSchema);
+
+// https://res.cloudinary.com/dl6kwsl4n/image/upload/v1691680015/user_ykjisp.png

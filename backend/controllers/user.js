@@ -104,6 +104,7 @@ exports.verifyEmail = async (req, res) => {
       id: user._id,
       name: user.name,
       email: user.email,
+      avatar: user.avatar.url,
       token: jwtToken,
       isVerified: user.isVerified,
     },
@@ -240,9 +241,16 @@ exports.singIn = async (req, res) => {
 
   const jwtToken = jwt.sign({ euserId: user._id }, process.env.JWT_SECRET);
 
-  const { _id, name, role, isVerified } = user;
+  const { _id, name, avatar, isVerified } = user;
 
   res.json({
-    user: { id: _id, name, email, token: jwtToken, isVerified, role },
+    user: {
+      id: _id,
+      name,
+      email,
+      token: jwtToken,
+      isVerified,
+      avatar: avatar.url,
+    },
   });
 };
