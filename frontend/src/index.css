@@ -31,8 +31,13 @@
   --medium-gray: rgb(224, 224, 224);
   --light-gray: rgb(248, 247, 247);
   --dark-gray: rgb(159, 159, 159);
+
   /* --dark-blue: #0f5298; */
+  /* --blue: rgb(0, 135, 245); */
+
+  --dark-blue: #0f5298;
   --blue: rgb(0, 135, 245);
+  --light-blue: rgb(69, 157, 229);
   --blue-text: @apply bg-blue-600;
   --blue-background: @apply text-blue-600;
 }
@@ -99,7 +104,7 @@ body {
 .custom_primary_button {
   position: relative;
   overflow: hidden;
-  background-color: var(--red);
+  background-color: var(--blue);
 }
 .custom_secondary_button {
   position: relative;
@@ -178,11 +183,11 @@ body {
 }
 
 .active-icon {
-  color: var(--red);
+  color: var(--white);
 }
 
 .active-text {
-  color: var(--red);
+  color: var(--white);
 }
 /* Loader */
 
@@ -302,7 +307,7 @@ input:-webkit-autofill:active {
 }
 
 .logo-text {
-  color: var(--red);
+  color: var(--blue);
 }
 
 .nav-container {
@@ -436,23 +441,54 @@ input:-webkit-autofill:active {
 .dashboard {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-}
-
-.active {
-  border-left: 5px solid var(--red);
-  background-color: var(--light-gray);
+  /* overflow: hidden; */
 }
 
 .dash-option {
   transition: 0.2s all cubic-bezier(0.075, 0.82, 0.165, 1);
   cursor: pointer;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+  /* border-radius: 10px;a */
 }
+
+.dash-option.active {
+  position: relative;
+  background-color: var(--blue);
+  border-radius: 10px;
+}
+
+.dash-option.active:hover {
+  position: relative;
+  background-color: var(--blue);
+  border-radius: 10px;
+}
+/* .dash-option.active::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: var(--blue);
+  border-radius: 20px;
+} */
 
 .dash-option:hover {
   background-color: var(--light-gray);
 }
 
+.logout-icon {
+  width: 20px;
+  aspect-ratio: 1/1;
+}
+
+.logout-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
 .side__border {
   position: relative;
 }
@@ -665,4 +701,94 @@ input:-webkit-autofill:active {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: var(--dark-blue);
+}
+.search-result {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  position: absolute;
+  top: 100%;
+  left: 10px;
+  width: 100%;
+  background-color: var(--light-gray);
+  max-width: 80%;
+  border-radius: 6px;
+  padding: 1rem;
+  transition: 0.4 all cubic-bezier(0.19, 1, 0.22, 1);
+  /* border: 1px solid red; */
+}
+
+.result-left {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.user-avatar {
+  max-width: 2.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border: 50%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.search-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-details .name {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--black);
+}
+
+.user-details .email {
+  font-size: 0.8rem;
+  color: var(--dark-gray);
+}
+
+.add-friend {
+  width: 30px;
+  aspect-ratio: 1/1;
+  /* border: 1px solid black; */
+  padding: 0.2rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.add-friend img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  cursor: pointer;
+}
+
+.friends {
+  width: 35px;
+  aspect-ratio: 1/1;
+  /* border: 1px solid black; */
+  padding: 0.2rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.friends img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  cursor: pointer;
 }

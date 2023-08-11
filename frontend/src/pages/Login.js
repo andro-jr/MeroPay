@@ -71,7 +71,7 @@ const Login = () => {
         <FormSideDetails />
 
         <div className='flex flex-col items-center my-auto pl:0 xl:pl-20'>
-          <h3 className='text-4xl text-red-500 font-bold mt-0 md:mt-10'>
+          <h3 className='text-4xl text-blue-500 font-bold mt-0 md:mt-10'>
             Log in to Mero Pay
           </h3>
           <p className='mb-8 mt-4 max-w-[350px] text-center'>

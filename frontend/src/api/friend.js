@@ -1,4 +1,4 @@
-import client from './client';
+import client from "./client";
 
 export const getAllFriends = async (userId) => {
   try {
@@ -43,7 +43,7 @@ export const searchFriend = async (search, userId) => {
 
 export const acceptFriendRequest = async (userId, friendId) => {
   try {
-    const { data } = await client.post('/friend/accept-request', {
+    const { data } = await client.post("/friend/accept-request", {
       userId,
       friendId,
     });
@@ -59,7 +59,23 @@ export const acceptFriendRequest = async (userId, friendId) => {
 
 export const rejectFriendRequest = async (userId, friendId) => {
   try {
-    const { data } = await client.post('/friend/reject-request', {
+    const { data } = await client.post("/friend/reject-request", {
+      userId,
+      friendId,
+    });
+    return data;
+  } catch (err) {
+    const { response } = err;
+
+    if (response?.data) return response.data;
+
+    return { error: err.message || err };
+  }
+};
+
+export const addFriend = async (friendId, userId) => {
+  try {
+    const { data } = await client.post('/friend/add-friend', {
       userId,
       friendId,
     });
