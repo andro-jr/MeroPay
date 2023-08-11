@@ -13,8 +13,6 @@ const Sidebar = () => {
   const useremail = authInfo.profile?.email;
   const avatar = authInfo.profile?.avatar;
 
-  console.log(authInfo);
-
   const handleClick = (e) => {
     e.preventDefault();
 

@@ -7,6 +7,7 @@ const {
   forgetPassword,
   sendRequestPasswordTokenStatus,
   resetPassword,
+  updateUser,
 } = require('../controllers/user');
 const {
   userValidator,
@@ -16,6 +17,7 @@ const {
 } = require('../middleware/validator');
 const { isAuth } = require('../middleware/auth');
 const { isValidPassResetToken } = require('../middleware/user');
+const { uploadAvatar, multipleUploads } = require('../middleware/multer');
 
 const router = express.Router();
 
@@ -35,6 +37,12 @@ router.post(
   isValidPassResetToken,
   resetPassword
 );
+router.post(
+  '/update/:userId',
+  // isAuth,
+  multipleUploads,
+  updateUser
+);
 
 router.post('/sign-in', signValidate, validate, singIn);
 router.get('/is-auth', isAuth, (req, res) => {
@@ -46,6 +54,7 @@ router.get('/is-auth', isAuth, (req, res) => {
       email: user.email,
       avatar: user.avatar.url,
       isVerified: user.isVerified,
+      paymentQR: user.paymentQR?.url,
     },
   });
 });

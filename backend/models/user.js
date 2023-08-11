@@ -30,6 +30,11 @@ const userSchema = mongoose.Schema({
       public_id: 'user_ykjisp',
     },
   },
+  paymentQR: {
+    type: Object,
+    url: String,
+    public_id: String,
+  },
   friends: {
     type: Array,
     default: [],

@@ -52,6 +52,7 @@ const AuthProvider = ({ children }) => {
       return setAuthInfo({ ...authInfo, isPending: false, error: error });
     }
 
+
     setAuthInfo({
       profile: {
         ...user,

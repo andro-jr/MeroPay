@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const cloudinary = require('../cloud');
 
 exports.sendError = (res, error, statusCode = 401) => {
   res.status(statusCode).json({ error });
@@ -16,4 +17,10 @@ exports.generateRandomByte = () => {
       resolve(bufferString);
     });
   });
+};
+
+exports.uploadImageToCloud = async (file) => {
+  const { secure_url: url, public_id } = await cloudinary.uploader.upload(file);
+
+  return { url, public_id };
 };

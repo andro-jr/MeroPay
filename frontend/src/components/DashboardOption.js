@@ -35,7 +35,7 @@ const DashboardOption = (to) => {
       name: 'setting',
       icon: <AiTwotoneSetting />,
       optionName: 'Setting',
-      to: '/setting',
+      to: '/settings',
     },
   ];
 

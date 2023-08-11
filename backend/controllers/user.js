@@ -1,11 +1,16 @@
 const { isValidObjectId } = require('mongoose');
 const jwt = require('jsonwebtoken');
+const cloudinary = require('../cloud');
 
 const EmailVerificationToken = require('../models/emailVerificationToken');
 const PasswordResetToken = require('../models/passwordResetToken');
 const User = require('../models/user');
 
-const { sendError, generateRandomByte } = require('../utils/helper');
+const {
+  sendError,
+  generateRandomByte,
+  uploadImageToCloud,
+} = require('../utils/helper');
 const { generateOTP, generateMailTransporter } = require('../utils/mail');
 const { otpTemplate } = require('../emailtemplates/otpEmailTemplate');
 
@@ -241,7 +246,7 @@ exports.singIn = async (req, res) => {
 
   const jwtToken = jwt.sign({ euserId: user._id }, process.env.JWT_SECRET);
 
-  const { _id, name, avatar, isVerified } = user;
+  const { _id, name, avatar, isVerified, paymentQR } = user;
 
   res.json({
     user: {
@@ -251,6 +256,50 @@ exports.singIn = async (req, res) => {
       token: jwtToken,
       isVerified,
       avatar: avatar.url,
+      paymentQR: paymentQR?.url,
     },
+  });
+};
+
+exports.updateUser = async (req, res) => {
+  const { username: name } = req.body;
+  const { avatar, QR } = req.files;
+  const { userId } = req.params;
+
+  if (!isValidObjectId(userId)) return sendError(res, 'Invalid ID');
+  const user = await User.findById(userId);
+
+  if (!user) return sendError(res, 'User not found!', 404);
+
+  // upload new avatar if there is one
+  if (avatar) {
+    const { url, public_id } = await uploadImageToCloud(avatar[0].path);
+    user.avatar = { url, public_id };
+    await user.save();
+  }
+
+  const QR_public_id = user.paymentQR?.public_id;
+
+  // remove old image if there was one
+  if (QR_public_id && QR) {
+    const { result } = await cloudinary.uploader.destroy(QR_public_id);
+    if (result !== 'ok')
+      return sendError(res, 'Could not remove image from cloud!');
+  }
+
+  // upload new avatar if there is one
+  if (QR) {
+    const { url, public_id } = await uploadImageToCloud(QR[0].path);
+    user.paymentQR = { url, public_id };
+    await user.save();
+  }
+
+  if (name) {
+    user.name = name;
+  }
+  await user.save();
+
+  res.json({
+    message: 'User updated successfully',
   });
 };

@@ -194,6 +194,7 @@ exports.searchFriend = async (req, res) => {
 
   res.send({
     user: {
+      id: friend._id,
       name: friend.name,
       email: friend.email,
       avatar: friend.avatar.url,
