@@ -541,3 +541,94 @@ input:-webkit-autofill:active {
   width: 100%;
   margin-top: 0.5rem;
 }
+
+.search-result {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  position: absolute;
+  top: 100%;
+  left: 10px;
+  width: 100%;
+  background-color: var(--light-gray);
+  max-width: 80%;
+  border-radius: 6px;
+  padding: 1rem;
+  transition: 0.4 all cubic-bezier(0.19, 1, 0.22, 1);
+  /* border: 1px solid red; */
+}
+
+.result-left {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.user-avatar {
+  max-width: 2.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border: 50%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.search-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-details .name {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--black);
+}
+
+.user-details .email {
+  font-size: 0.8rem;
+  color: var(--dark-gray);
+}
+
+.add-friend {
+  width: 30px;
+  aspect-ratio: 1/1;
+  /* border: 1px solid black; */
+  padding: 0.2rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.add-friend img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  cursor: pointer;
+}
+
+.friends{
+  width: 35px;
+  aspect-ratio: 1/1;
+  /* border: 1px solid black; */
+  padding: 0.2rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.friends img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  cursor: pointer;
+}

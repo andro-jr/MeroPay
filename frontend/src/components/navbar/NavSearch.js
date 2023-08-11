@@ -1,50 +1,117 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 
 import { FiSearch } from "react-icons/fi";
 import { AuthContext } from "../../context/AuthProvider";
 import { searchFriend } from "../../api/friend";
 import ModalBox from "../ModalBox";
+import AlreadyFriendsResult from "../AlreadyFriendsResult";
+import NotFriends from "../NotFriends";
 
 const NavSearch = ({}) => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-  // console.log(typeof(searchResult));
-  
-  useEffect(() => {
-    console.log(typeof(searchResult));
-  },[])
+  const [isFocused, setIsFocused] = useState(false);
+  const containerRef = useRef(null);
 
   const { authInfo } = useContext(AuthContext);
   const userId = authInfo.profile?.id;
+  const username = authInfo.profile?.name;
+  
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (containerRef.current && !containerRef.current.contains(event.target)) {
+        setIsFocused(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
+  console.log(searchResult);
+
+ 
 
   const handleChange = async (e) => {
     e.preventDefault();
     const { value } = e.target;
-    setSearch(value);
+    setSearch([value]);
     const { user, error } = await searchFriend(value, userId);
-    setSearchResult(user);
-    console.log(user);
-    if (user) {
-      console.log("user vetyo hai");
-    }
+
+    const result = user ? [user] : [];
+
+    setSearchResult(result);
   };
+
+  const handleInputFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleInputBlur = () => {
+    setIsFocused(false);
+  };
+
 
   return (
     <div>
-      <div className="search-bar">
+      <div className="search-bar" ref={containerRef}>
         <form action="" className="w-full">
           <input
             className="relative"
             placeholder="search for users"
             value={search}
             onChange={handleChange}
+            onClick={handleInputFocus}
+            // onBlur={handleInputBlur}
           />
           <FiSearch className="absolute top-1/2 left-8 -translate-y-1/2 text-gray-500" />
         </form>
-        <div className="search-result">
-          {/* {searchResult &&
-            searchResult.map((user, index) => <div>{user.name}</div>)} */}
-        </div>
+
+        {isFocused && (
+          <div className="search-result">
+            {Array.isArray(searchResult) && searchResult.length > 0 ? (
+              <ul className="w-full">
+                {searchResult.map((user, index) => (
+                  <div
+                    className="flex items-center justify-between "
+                    key={user.id}
+                  >
+                    <div className="result-left">
+                      <div className="user-avatar">
+                        <img
+                          src={user.avatar}
+                          alt=""
+                          className="search-avatar"
+                        />
+                      </div>
+                      <div className="user-details">
+                        <li key={index} className="text-md name">
+                          {user.name}
+                        </li>
+                        <li key={index} className="text-sm email">
+                          {user.email}
+                        </li>
+                      </div>
+                    </div>
+
+                    <div className="decision result-right">
+                      {user.isAlreadyFriend ? (
+                        <AlreadyFriendsResult />
+                      ) : username === user.name ? (
+                        ""
+                      ) : <NotFriends />}
+                    </div>
+                  </div>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-gray-500">Your friends don't exist</p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
