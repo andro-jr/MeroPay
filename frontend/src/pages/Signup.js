@@ -93,7 +93,7 @@ const Signup = () => {
         <FormSideDetails />
 
         <div className="flex flex-col items-center my-auto p-0 lg:p-5 2xl:p-20 pr-0  overflow-y-auto overflow-x-hidden">
-          <h3 className="text-4xl text-red-500 font-bold mt-0 md:mt-0">
+          <h3 className="text-4xl text-blue-500 font-bold mt-0 md:mt-0">
             Sign Up
           </h3>
           <p className="my-8 mt-4 max-w-[350px] lg:max-w-[400px] text-center">

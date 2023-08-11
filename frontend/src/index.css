@@ -31,8 +31,9 @@
   --medium-gray: rgb(224, 224, 224);
   --light-gray: rgb(248, 247, 247);
   --dark-gray: rgb(159, 159, 159);
-  /* --dark-blue: #0f5298; */
-  /* --blue: rgb(0, 135, 245); */
+  --dark-blue: #0f5298;
+  --blue: rgb(0, 135, 245);
+  --light-blue: rgb(69, 157, 229);
   --blue-text: @apply bg-blue-600;
   --blue-background: @apply text-blue-600;
 }
@@ -99,7 +100,7 @@ body {
 .custom_primary_button {
   position: relative;
   overflow: hidden;
-  background-color: var(--red);
+  background-color: var(--blue);
 }
 .custom_secondary_button {
   position: relative;
@@ -178,11 +179,11 @@ body {
 }
 
 .active-icon {
-  color: var(--red);
+  color: var(--white);
 }
 
 .active-text {
-  color: var(--red);
+  color: var(--white);
 }
 /* Loader */
 
@@ -302,7 +303,7 @@ input:-webkit-autofill:active {
 }
 
 .logo-text {
-  color: var(--red);
+  color: var(--blue);
 }
 
 .nav-container {
@@ -444,28 +445,47 @@ input:-webkit-autofill:active {
   cursor: pointer;
   position: relative;
   transition: all 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+  /* border-radius: 10px;a */
 }
 
 .dash-option.active {
-  /* border-left: 5px solid var(--red); */
   position: relative;
-  background-color: var(--light-gray);
+  background-color: var(--blue);
+  border-radius: 10px;
 }
-.dash-option.active::after {
+
+.dash-option.active:hover {
+  position: relative;
+  background-color: var(--blue);
+  border-radius: 10px;
+}
+/* .dash-option.active::after {
   content: "";
   position: absolute;
   width: 5px;
   height: 100%;
   left: 0;
   top: 0;
-  background-color: var(--red);
+  background-color: var(--blue);
   border-radius: 20px;
-}
+} */
 
 .dash-option:hover {
   background-color: var(--light-gray);
 }
 
+
+.logout-icon{
+  width: 20px;
+  aspect-ratio: 1/1;
+}
+
+.logout-icon img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
 .side__border {
   position: relative;
 }

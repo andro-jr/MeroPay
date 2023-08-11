@@ -23,7 +23,7 @@ const FormInput = ({
       className={`relative mb-5 ${style}  min-w-[350px] xl:min-w-[400px] flex flex-col-reverse`}
     >
       <input
-        className="relative w-full py-3 mt-2  border-b-2 border-red-600 outline-none placeholder:text-sm placeholder:tracking-wider transition tracking-wider text-sm peer"
+        className="relative w-full py-3 mt-2  border-b-2 border-blue-600 outline-none placeholder:text-sm placeholder:tracking-wider transition tracking-wider text-sm peer"
         placeholder={placeholder}
         type={type === "password" ? (show ? "text" : "password") : type}
         name={name}
@@ -33,7 +33,7 @@ const FormInput = ({
       />
       <label
         htmlFor={name}
-        className="form__label peer-focus:text-red-600 transition"
+        className="form__label peer-focus:text-blue-600 transition"
       >
         {label || name}
       </label>
