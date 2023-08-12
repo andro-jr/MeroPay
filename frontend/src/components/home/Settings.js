@@ -93,7 +93,7 @@ const Settings = () => {
               />
             </div>
           </div>
-          <div className='relative'>
+          <div className='relative flex justify-center'>
             <label htmlFor='QR' className='cursor-pointer'>
               {paymentQr || paymentFile ? (
                 <div className='paymentQR_image'>
