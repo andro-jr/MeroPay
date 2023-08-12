@@ -28,7 +28,7 @@ const FriendsRequest = ({ id: friendId, name, email, avatar }) => {
   return (
     <div className='profile-friendRequest'>
       <div className='profile-avatar'>
-        <img src='/avatar.jpg' alt='profile-avatar' />
+        <img src={avatar} alt='profile-avatar' />
       </div>
       <div className='avatar-info'>
         <p>{name}</p>

@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import { addFriend } from "../api/friend";
-import { AuthContext } from "../context/AuthProvider";
-import { NotificationContext } from "../context/NotificationProvider";
+import React, { useContext, useEffect, useState } from 'react';
+import { addFriend } from '../api/friend';
+import { AuthContext } from '../context/AuthProvider';
+import { NotificationContext } from '../context/NotificationProvider';
 
 const NotFriends = ({ friendId, requestAlreadyReceived }) => {
-  const [addNew, setAddNew] = useState("/add.svg");
-  const [reqSent, setReqSent] = useState("");
+  const [addNew, setAddNew] = useState('/add.svg');
+  const [reqSent, setReqSent] = useState('');
 
   const { authInfo } = useContext(AuthContext);
 
@@ -17,8 +17,8 @@ const NotFriends = ({ friendId, requestAlreadyReceived }) => {
 
   useEffect(() => {
     if (requestAlreadyReceived) {
-      setAddNew("/sent.svg");
-      setReqSent("Request Sent");
+      setAddNew('/sent.svg');
+      setReqSent('Request Sent');
     }
   }, []);
 
@@ -27,29 +27,30 @@ const NotFriends = ({ friendId, requestAlreadyReceived }) => {
 
     if (!requestAlreadyReceived) {
       const { user, error, message } = await addFriend(friendId, userId);
+      if (error) return updateNotification('error', error);
       console.log(user);
-      setAddNew("/sent.svg");
+      setAddNew('/sent.svg');
 
-      updateNotification("success", message);
-      setReqSent("Request Sent");
+      updateNotification('success', message);
+      setReqSent('Request Sent');
     } else {
-      setAddNew("/add.svg");
+      setAddNew('/add.svg');
 
-      setReqSent("Request Cancelled");
+      setReqSent('Request Cancelled');
       setInterval(() => {
-        setReqSent("");
+        setReqSent('');
       }, 1000);
     }
   };
 
   return (
-    <div className=" flex gap-6 items-center">
-      <p className="text-sm text-gray-400">{reqSent}</p>
-      <div className="add-friend">
+    <div className=' flex gap-6 items-center'>
+      <p className='text-sm text-gray-400'>{reqSent}</p>
+      <div className='add-friend'>
         <img
           src={addNew}
-          alt=""
-          className="add transition-all duration-400"
+          alt=''
+          className='add transition-all duration-400'
           onClick={handleClick}
         />
       </div>

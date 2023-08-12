@@ -36,7 +36,7 @@ const NotificationProvider = ({ children }) => {
     >
       {children}
       {notification && (
-        <div className='fixed left-1/2  -translate-x-1/2 top-14 px-4 py-1 '>
+        <div className='fixed left-1/2  -translate-x-1/2 top-14 px-4 py-1 z-20'>
           <div
             className={
               classes + 'bounce-in-top rounded font-semibold border-b-2'
