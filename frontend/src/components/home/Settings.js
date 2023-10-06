@@ -59,9 +59,9 @@ const Settings = () => {
     setShowLoader(true);
 
     const { error, message } = await updateUser(formData, userId);
-    if (error) return updateNotification('error', error);
 
     setShowLoader(false);
+    if (error) return updateNotification('error', error);
 
     updateNotification('success', message);
 

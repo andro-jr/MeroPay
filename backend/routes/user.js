@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const {
   create,
   verifyEmail,
@@ -8,44 +8,45 @@ const {
   sendRequestPasswordTokenStatus,
   resetPassword,
   updateUser,
-} = require('../controllers/user');
+  getUserDetails,
+} = require("../controllers/user");
 const {
   userValidator,
   validate,
   signValidate,
   validatePassword,
-} = require('../middleware/validator');
-const { isAuth } = require('../middleware/auth');
-const { isValidPassResetToken } = require('../middleware/user');
-const { uploadAvatar, multipleUploads } = require('../middleware/multer');
+} = require("../middleware/validator");
+const { isAuth } = require("../middleware/auth");
+const { isValidPassResetToken } = require("../middleware/user");
+const { uploadAvatar, multipleUploads } = require("../middleware/multer");
 
 const router = express.Router();
 
-router.post('/create', userValidator, validate, create);
-router.post('/verify-email', verifyEmail);
-router.post('/resend-email-verification-token', resendEmailVerificationToken);
-router.post('/forgot-password', forgetPassword);
+router.post("/create", userValidator, validate, create);
+router.post("/verify-email", verifyEmail);
+router.post("/resend-email-verification-token", resendEmailVerificationToken);
+router.post("/forgot-password", forgetPassword);
 router.post(
-  '/verify-pass-reset-token',
+  "/verify-pass-reset-token",
   isValidPassResetToken,
   sendRequestPasswordTokenStatus
 );
 router.post(
-  '/reset-password',
+  "/reset-password",
   validatePassword,
   validate,
   isValidPassResetToken,
   resetPassword
 );
 router.post(
-  '/update/:userId',
+  "/update/:userId",
   // isAuth,
   multipleUploads,
   updateUser
 );
 
-router.post('/sign-in', signValidate, validate, singIn);
-router.get('/is-auth', isAuth, (req, res) => {
+router.post("/sign-in", signValidate, validate, singIn);
+router.get("/is-auth", isAuth, (req, res) => {
   const { user } = req;
   res.json({
     user: {
@@ -58,5 +59,7 @@ router.get('/is-auth', isAuth, (req, res) => {
     },
   });
 });
+
+router.get("/details/:userId", getUserDetails);
 
 module.exports = router;
