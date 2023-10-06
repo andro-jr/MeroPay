@@ -1,29 +1,34 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const memberSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
     required: true,
   },
   status: {
     type: String,
-    enum: ['pending', 'approved'],
-    default: 'pending',
+    enum: ["pending", "completed"],
+    default: "pending",
   },
   amount: {
     type: Number,
     required: true,
+  },
+  paymentScreenshot: {
+    type: Object,
+    url: String,
+    public_id: String,
   },
 });
 
 const expenseSchema = mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
     required: true,
   },
-  status: {
+  completed: {
     type: Boolean,
     default: false,
   },
@@ -34,4 +39,4 @@ const expenseSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Expense', expenseSchema);
+module.exports = mongoose.model("Expense", expenseSchema);

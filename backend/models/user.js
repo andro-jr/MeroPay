@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const userSchema = mongoose.Schema({
   name: {
@@ -26,8 +26,8 @@ const userSchema = mongoose.Schema({
   avatar: {
     type: Object,
     default: {
-      url: 'https://res.cloudinary.com/dl6kwsl4n/image/upload/v1691680015/user_ykjisp.png',
-      public_id: 'user_ykjisp',
+      url: "https://res.cloudinary.com/dl6kwsl4n/image/upload/v1691680015/user_ykjisp.png",
+      public_id: "user_ykjisp",
     },
   },
   paymentQR: {
@@ -47,18 +47,18 @@ const userSchema = mongoose.Schema({
     type: Array,
     default: [],
   },
-  expensesCreated: {
+  toReceive: {
     type: Array,
     default: [],
   },
-  expensesIncluded: {
+  toPay: {
     type: Array,
     default: [],
   },
 });
 
-userSchema.pre('save', async function (next) {
-  if (this.isModified('password')) {
+userSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, 10);
   }
   next();
@@ -69,8 +69,8 @@ userSchema.methods.comparePass = async function (password) {
   return result;
 };
 
-userSchema.index({ name: 'text' });
+userSchema.index({ name: "text" });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);
 
 // https://res.cloudinary.com/dl6kwsl4n/image/upload/v1691680015/user_ykjisp.png
