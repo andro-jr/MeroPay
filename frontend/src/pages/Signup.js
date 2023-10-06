@@ -59,7 +59,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    // setIsLoading(true);
 
     const { ok, err } = validateUserInput(inputData);
 
@@ -74,7 +74,7 @@ const Signup = () => {
     const { error, user } = await signUpUser(payload);
     if (error) return updateNotification("error", error);
 
-    setIsLoading(false);
+    // setIsLoading(false);
     // console.log(user);
 
     navigate("/auth/OtpVerification", {

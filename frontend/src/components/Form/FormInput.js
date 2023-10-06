@@ -29,6 +29,7 @@ const FormInput = ({
         name={name}
         id={name}
         value={value}
+        autoComplete='off'
         {...rest}
         maxLength={name === 'Enter OTP' ? 6 : null}
       />
