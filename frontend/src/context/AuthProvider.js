@@ -65,6 +65,7 @@ const AuthProvider = ({ children }) => {
 
   const handleLogout = () => {
     localStorage.removeItem('auth-token');
+    localStorage.removeItem('firstLogin');
 
     setAuthInfo({ ...defaultAuthInfo });
 
