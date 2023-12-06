@@ -62,7 +62,7 @@ const PayExpense = () => {
                 </td>
 
                 <td>
-                    <p>Baby</p>
+                    <p>Hero</p>
                 </td>
 
                 <td>Rs. 1500</td>

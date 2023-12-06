@@ -62,7 +62,7 @@ const ReceiveExpenses = () => {
                 </td>
 
                 <td>
-                  <p>Baby</p>
+                  <p>Checking</p>
                 </td>
 
                 <td>Rs. 1500</td>
@@ -112,7 +112,7 @@ const ReceiveExpenses = () => {
                 </td>
 
                 <td>
-                  <p>Baby</p>
+                  <p>Check</p>
                 </td>
 
                 <td>Rs. 1500</td>
@@ -137,7 +137,7 @@ const ReceiveExpenses = () => {
                 </td>
 
                 <td>
-                  <p>Baby</p>
+                  <p>Yooo</p>
                 </td>
 
                 <td>Rs. 1500</td>
@@ -162,7 +162,7 @@ const ReceiveExpenses = () => {
                 </td>
 
                 <td>
-                  <p>Baby</p>
+                  <p>List</p>
                 </td>
 
                 <td>Rs. 1500</td>
