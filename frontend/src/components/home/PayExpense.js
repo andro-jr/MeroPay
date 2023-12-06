@@ -1,5 +1,5 @@
 import React from "react";
-import DashboardContainer from "../DashboardContainer";
+import DashboardContainer from "../Dashboard/DashboardContainer";
 
 const PayExpense = () => {
   return (

@@ -119,7 +119,7 @@ const UnequalExpense = () => {
 
   const calcEqual = (newAmount) => {
     const totalAmount = newAmount;
-    console.log("totalAmount", totalAmount);
+    // console.log("totalAmount", totalAmount);
 
 
     

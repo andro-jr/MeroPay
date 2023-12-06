@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { addFriend } from '../api/friend';
-import { AuthContext } from '../context/AuthProvider';
-import { NotificationContext } from '../context/NotificationProvider';
+import { addFriend } from '../../api/friend';
+import { AuthContext } from '../../context/AuthProvider';
+import { NotificationContext } from '../../context/NotificationProvider';
 
 const NotFriends = ({ friendId, requestAlreadyReceived }) => {
   const [addNew, setAddNew] = useState('/add.svg');

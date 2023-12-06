@@ -60,6 +60,11 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+.small{
+  width: 25px !important;
+  height: 25px !important;
+}
+
 .secondVariant {
   padding: 1rem 4rem;
   text-transform: capitalize;

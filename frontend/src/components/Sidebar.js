@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Logout from './Logout';
-import DashboardOption from './DashboardOption';
+import DashboardOption from './Dashboard/DashboardOption';
 import { AuthContext } from '../context/AuthProvider';
 import Profile from './OwnProfile';
 

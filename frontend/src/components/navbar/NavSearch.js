@@ -3,9 +3,9 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { AuthContext } from '../../context/AuthProvider';
 import { searchFriend } from '../../api/friend';
-import ModalBox from '../ModalBox';
-import AlreadyFriendsResult from '../AlreadyFriendsResult';
-import NotFriends from '../NotFriends';
+// import ModalBox from '../ModalBox';
+import AlreadyFriendsResult from '../Friend/AlreadyFriendsResult';
+import NotFriends from '../Friend/NotFriends';
 import { NotificationContext } from '../../context/NotificationProvider';
 
 const NavSearch = ({}) => {
