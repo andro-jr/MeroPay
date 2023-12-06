@@ -5,6 +5,7 @@ import { getPendingFriends } from "../../api/friend";
 import { AuthContext } from "../../context/AuthProvider";
 import FriendsProfile from "./FriendsProfile";
 import Loader from "../Loader";
+import PendingRequestList from "./PendingRequestList";
 
 const PendingRequestOverlay = ({
   pendingModalOpen,
@@ -30,8 +31,8 @@ const PendingRequestOverlay = ({
 
   return (
     <Modal isOpen={pendingModalOpen} closeModal={pendingModalClose}>
-      <h2 className="text-2xl font-bold text-gray-700 mb-8">
-        Your Friends List
+      <h2 className="text-2xl font-bold text-gray-700 mb-4">
+        Pending Requests
       </h2>
       <ul>
         {loading ? (
@@ -45,29 +46,21 @@ const PendingRequestOverlay = ({
                 {pendingRequest.map((friend, index) => (
                   <li
                     key={index}
-                    className=" flex justify-between w-full p-4 items-center border-b border-gray-100"
+                    className=" flex justify-between w-full p-4 pl-0 items-center border-b border-gray-100"
                   >
-                    <FriendsProfile
-                      avatar={friend.avatar}
-                      name={friend.name}
-                      email={friend.email}
+                    <PendingRequestList
+                       key={index}
+                       id={friend.userId}
+                       avatar={friend.avatar}
+                       name={friend.name}
+                       email={friend.email}
                     />
                     {/* <button onClick={() => {}}>Unfriend</button> */}
-
-                    <div className="friends">
-                      <img
-                        src="/friends.svg"
-                        alt=""
-                        className="add small"
-                        sizes={15}
-                        onClick={() => {}}
-                      />
-                    </div>
                   </li>
                 ))}
               </div>
             ) : (
-              "Add friends to create expense together"
+              "No pending requests"
             )}
           </div>
         )}

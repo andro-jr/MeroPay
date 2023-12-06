@@ -33,8 +33,10 @@ const FriendsList = () => {
   };
 
   const fetchPendingFriends = async (userId) => {
+    setLoading(true);
     const res = await getPendingFriends(userId);
     setPendingFriends(res);
+    setLoading(false);
   };
 
   

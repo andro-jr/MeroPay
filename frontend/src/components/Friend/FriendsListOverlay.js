@@ -39,7 +39,7 @@ const FriendsListOverlay = ({ isModalOpen, closeModal, children }) => {
             {friends.map((friend, index) => (
               <li
                 key={index}
-                className=" flex justify-between w-full p-4 items-center border-b border-gray-100"
+                className=" flex justify-between w-full p-4 pl-0 items-center border-b border-gray-100"
               >
                 <FriendsProfile
                   avatar={friend.avatar}
