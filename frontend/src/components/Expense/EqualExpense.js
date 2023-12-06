@@ -1,20 +1,48 @@
 import React, { useState, useEffect, useContext } from "react";
 import Button from "../Button";
 import { ExpenseContext } from "../../context/ExpenseProvider";
+import { getAllFriends } from "../../api/friend";
+import { NotificationContext } from "../../context/NotificationProvider";
+import { AuthContext } from "../../context/AuthProvider";
+
+import { createExpense } from "../../api/expense";
+import Loader from "../Loader";
 
 const EqualExpense = () => {
+  const [loading, setLoading] = useState(false);
+  const [expenseName, setExpenseName] = useState("");
+  const [selectedUserIds, setSelectedUserIds] = useState([]);
+  const { updateNotification } = useContext(NotificationContext);
   const { isOpen, closeModal } = useContext(ExpenseContext);
   const [selectedNumber, setSelectedNumber] = useState(1);
   const [selectedUsers, setSelectedUsers] = useState(Array(1).fill(""));
-  const availableUsers = ["Prabin", "Ram", "Shyam", "Leon", "HeroLal"];
   const [disabledUsers, setDisabledUsers] = useState([]);
   const [amount, setAmount] = useState(0);
+  const [selectedAmounts, setSelectedAmounts] = useState(
+    Array(selectedUsers.length).fill(0)
+  );
   const [splitAmount, setSplitAmount] = useState(0);
 
   //select expenseType
   const [equal, setEqual] = useState(true);
   const [unequal, setUnEqual] = useState(true);
   const [label, setLabel] = useState(false);
+
+  //fetching friends
+  const { authInfo } = useContext(AuthContext);
+  const userId = authInfo.profile?.id;
+  const [friends, setFriends] = useState([]);
+
+  const fetchAllFriends = async (userId) => {
+    const res = await getAllFriends(userId);
+    setFriends(res);
+  };
+
+  const friendsNames = friends.map((fri) => fri.name);
+
+  useEffect(() => {
+    fetchAllFriends(userId);
+  }, []);
 
   const changeExpenseType = (e) => {
     e.preventDefault();
@@ -43,28 +71,42 @@ const EqualExpense = () => {
     // Ensure that the selectedUsers array has the same length as the selected number
     if (selectedUsers.length !== newSelectedNumber) {
       setSelectedUsers(Array(newSelectedNumber).fill(""));
+      setSelectedAmounts(Array(newSelectedNumber).fill(0));
     }
   };
+
+  const updateExpenseName = (e) => {
+    e.preventDefault();
+    setExpenseName(e.target.value) 
+  }
 
   const handleUserSelect = (index, user) => {
     const newSelectedUsers = [...selectedUsers];
     newSelectedUsers[index] = user;
     setSelectedUsers(newSelectedUsers);
+
+    // Find the friend based on the selected user's name
+    const friend = friends.find((friend) => friend.name === user);
+
+    if (friend) {
+      // Update another state array with the userId
+      const newSelectedUserIds = [...selectedUserIds];
+      newSelectedUserIds[index] = friend.userId;
+      setSelectedUserIds(newSelectedUserIds);
+      // console.log(newSelectedUserIds)
+    }
   };
 
   const handleAmountChange = (e) => {
-    e.preventDefault();
     const amount = e.target.value;
 
     // Check if the input is a valid number (or empty string)
     if (/^\d*$/.test(amount)) {
-      setAmount((prevAmount) => {
-        const newAmount = amount;
-        return newAmount;
-      });
+      setAmount(Number(amount));
     } else {
       // Clear the input if non-numeric characters are present
-      setAmount("");
+      // setAmount(0);
+      return;
     }
   };
 
@@ -88,24 +130,62 @@ const EqualExpense = () => {
     }
   };
 
-  const handleClick = () => {
+  const handleSubmit = async (e) => {
+    setLoading(true);
+
+    if(!expenseName || selectedUsers.length === 0) {
+      closeModal();
+      updateNotification("error", "All fields must be filled");
+    }
+
+    console.log("entered here");
+    e.preventDefault();
+
+    // Creation of an array of member objects with userId and amount
+    const membersData = selectedUserIds.map((userId, index) => ({
+      userId: userId,
+      amount: splitAmount,
+    }));
+
+    // Creation of the data object in the desired format
+    const data = {
+      owner: userId,
+      total: amount,
+      members: membersData,
+    };
+
+    await createExp(data);
+    setLoading(false);
+
     closeModal();
-    setSelectedNumber(1);
-    setSplitAmount();
-    setAmount();
-    setSelectedUsers(Array(1).fill(""));
+  };
+
+  const createExp = async (data) => {
+    const response = await createExpense(data);
+    console.log(response);
+    const { error, message } = response;
+    if (error) updateNotification("error", error);
+    if (message) updateNotification("success", message);
+
+    // handleRefresh();
   };
 
   useEffect(() => {
     // Reset disabled users when the selected number changes
     setDisabledUsers([]);
     calcEqual(amount);
-  }, [selectedNumber, amount]);
-  
+  }, [selectedNumber, amount, loading]);
+
   return (
     <div className="expense-entry-form">
       <div className="expense-name-container">
-        <input type="text" className="expense-name" onClick={shiftLabel} />
+        <input
+          type="text"
+          className="expense-name"
+          onClick={shiftLabel}
+          value={expenseName}
+          onChange = {updateExpenseName}
+        />
         <label className="expense-name-label" onClick={shiftLabel}>
           Expense Name
         </label>
@@ -123,7 +203,7 @@ const EqualExpense = () => {
           <input
             type="text"
             placeholder="enter the total amount"
-            onChange={handleAmountChange}
+            onChange={(e) => handleAmountChange(e)}
             value={amount}
           />
         </div>
@@ -142,7 +222,7 @@ const EqualExpense = () => {
                 <option value="" disabled>
                   Select a user
                 </option>
-                {availableUsers.map((user, userIndex) => (
+                {friendsNames.map((user, userIndex) => (
                   <option
                     key={userIndex}
                     value={user}
@@ -165,7 +245,14 @@ const EqualExpense = () => {
             </div>
           ))}
 
-          <Button title="Create Expense" styles="w-2/3 text-white" />
+          <button
+            className={`px-8 py-3 rounded-md mt-8 w-full text-white custom_primary_button`}
+            onClick={(e) => handleSubmit(e)}
+          >
+            <div className="button_text ">
+              {loading ? <Loader /> : "CreateExpense"}
+            </div>
+          </button>
         </div>
       </div>
     </div>

@@ -1,21 +1,58 @@
 import React, { useState, useEffect, useContext } from "react";
 import { ExpenseContext } from "../../context/ExpenseProvider";
 import Button from "../Button";
+import { getAllFriends } from "../../api/friend";
+import { AuthContext } from "../../context/AuthProvider";
+import { NotificationContext } from "../../context/NotificationProvider";
+import { createExpense } from "../../api/expense";
 
 const UnequalExpense = () => {
+  const { authInfo } = useContext(AuthContext);
+  const userId = authInfo.profile?.id;
+  const [loading, setLoading] = useState(false);
   const { isOpen, closeModal } = useContext(ExpenseContext);
   const [selectedNumber, setSelectedNumber] = useState(1);
   const [selectedUsers, setSelectedUsers] = useState(Array(1).fill(""));
   const availableUsers = ["Prabin", "Ram", "Shyam", "Leon", "HeroLal"];
   const [disabledUsers, setDisabledUsers] = useState([]);
-  const [amount, setAmount] = useState(0);
-  const [splitAmount, setSplitAmount] = useState(0);
+
+  //stores the array of amount and the total of the array
+  const [amount, setAmount] = useState([]);
+  const [total, setTotal] = useState(0);
+
+
+  const [amounts, setAmounts] = useState([]);
+  const [expenseName, setExpenseName] = useState("");
+
+  // notificaton provider
+  const { updateNotification } = useContext(NotificationContext);
+
+  // used to handle the selected users for creating expense
+  const [selectedUserIds, setSelectedUserIds] = useState([]);
 
   //select expenseType
   const [equal, setEqual] = useState(true);
   const [unequal, setUnEqual] = useState(true);
   const [label, setLabel] = useState(false);
 
+  const [friends, setFriends] = useState([]);
+  // const [friendsName, setFriendsName] = useState([]);
+
+  const fetchAllFriends = async (userId) => {
+    const res = await getAllFriends(userId);
+    // console.log(userId);
+    setFriends(res);
+  };
+
+  const friendsNames = friends.map((fri) => fri.name);
+
+  // calls the function to fetch the friends from the server as soon as the page loads
+  useEffect(() => {
+    fetchAllFriends(userId);
+  }, []);
+
+
+  // handles the change of expense type
   const changeExpenseType = (e) => {
     e.preventDefault();
     const equalExpense = document.querySelector(".equal-split");
@@ -36,6 +73,7 @@ const UnequalExpense = () => {
     });
   };
 
+  // handles the change in user for the creation of the expense
   const handleNumberChange = (e) => {
     const newSelectedNumber = parseInt(e.target.value, 10);
     setSelectedNumber(newSelectedNumber);
@@ -46,38 +84,49 @@ const UnequalExpense = () => {
     }
   };
 
+  // handles which user is selected and which to disable
   const handleUserSelect = (index, user) => {
     const newSelectedUsers = [...selectedUsers];
     newSelectedUsers[index] = user;
     setSelectedUsers(newSelectedUsers);
   };
 
-  const handleAmountChange = (e) => {
-    e.preventDefault();
-    const amount = e.target.value;
+  // handles the change in value of each input field
+
+  const handleAmountChange = (index, amount) => {
+    // e.preventDefault();
 
     // Check if the input is a valid number (or empty string)
-    if (/^\d*$/.test(amount)) {
-      setAmount((prevAmount) => {
-        const newAmount = amount;
-        return newAmount;
-      });
-    } else {
-      // Clear the input if non-numeric characters are present
-      setAmount("");
-    }
+    // if (/^\d*$/.test(amount)) {
+    //   setAmount((prevAmount) => {
+    //     const newAmount = amount;
+    //     return newAmount;
+    //   });
+    // } else {
+    //   // Clear the input if non-numeric characters are present
+    //   setAmount("");
+
+    const updatedAmounts = [...amounts];
+    updatedAmounts[index] = Number(amount); // Convert the amount to a number
+    setAmounts(updatedAmounts);
+
+    // Calculate the total of the array and update the total state
+    const newTotal = updatedAmounts.reduce((acc, val) => acc + val, 0);
+    setTotal(newTotal);
   };
+
+  // handles the calculation of total amount and verifies if the final amount is the same as the normal total
 
   const calcEqual = (newAmount) => {
     const totalAmount = newAmount;
-    // console.log("totalAmount", totalAmount);
-    const equalSplit = (totalAmount / selectedNumber).toFixed(2);
-    setSplitAmount(() => {
-      const newSplit = equalSplit;
-      return newSplit;
-    });
+    console.log("totalAmount", totalAmount);
+
+
+    
   };
 
+
+  // handles the shifting of active label
   const shiftLabel = () => {
     const input = document.querySelector(".expense-name");
     const inputLabel = document.querySelector(".expense-name-label");
@@ -88,6 +137,54 @@ const UnequalExpense = () => {
     }
   };
 
+
+  // handles expense creation
+  const handleSubmit = async (e) => {
+    setLoading(true);
+
+    if(!expenseName || selectedUsers.length === 0) {
+      closeModal();
+      updateNotification("error", "All fields must be filled");
+    }
+
+    console.log("entered here");
+    e.preventDefault();
+
+    // Creation of an array of member objects with userId and amount
+    const amountToPay = amount.map((amt, index) => ({
+      amount: amt,
+    }));
+
+    const membersData = selectedUserIds.map((userId, index) => ({
+      userId: userId,
+      amount: amountToPay
+    }));
+
+    // Creation of the data object in the desired format
+    const data = {
+      owner: userId,
+      total: total,
+      members: membersData,
+    };
+
+    await createExp(data);
+    setLoading(false);
+
+    closeModal();
+  };
+
+  const createExp = async (data) => {
+    const response = await createExpense(data);
+    console.log(response);
+    const { error, message } = response;
+    if (error) updateNotification("error", error);
+    if (message) updateNotification("success", message);
+
+    // handleRefresh();
+  };
+
+
+  // handles click while clickin outsite the modal box
   const handleClick = () => {
     closeModal();
     setSelectedNumber(1);
@@ -101,6 +198,7 @@ const UnequalExpense = () => {
     setDisabledUsers([]);
     calcEqual(amount);
   }, [selectedNumber, amount]);
+   
   return (
     <div className="expense-entry-form">
       <div className="expense-name-container">
@@ -118,7 +216,6 @@ const UnequalExpense = () => {
             </option>
           ))}
         </select>
-
       </div>
 
       <h3 className=" split_headline">Select your friends to split the bill</h3>
@@ -134,7 +231,7 @@ const UnequalExpense = () => {
                 <option value="" disabled>
                   Select a user
                 </option>
-                {availableUsers.map((user, userIndex) => (
+                {friendsNames.map((user, userIndex) => (
                   <option
                     key={userIndex}
                     value={user}
@@ -148,12 +245,23 @@ const UnequalExpense = () => {
                 ))}
               </select>
               <div className="unequal-expenseform-value">
-                <input type="text" onChange={handleAmountChange} placeholder="enter the amount"/>
+              <input
+                  type="text"
+                  onChange={(e) => handleAmountChange(index, e.target.value)}
+                  placeholder="enter the amount"
+                />
               </div>
             </div>
           ))}
 
-          <Button title="Create Expense" styles="w-2/3 text-white" />
+          <button
+            className={`px-8 py-3 rounded-md mt-8 w-full text-white custom_primary_button`}
+            onClick={(e) => handleSubmit(e)}
+          >
+            <div className="button_text ">
+              {loading ? <Loader /> : "CreateExpense"}
+            </div>
+          </button>
         </div>
       </div>
     </div>

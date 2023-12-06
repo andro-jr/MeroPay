@@ -24,7 +24,7 @@ const DashboardOption = (to) => {
       name: "outgoing",
       icon: <GiPayMoney />,
       optionName: "To Pay",
-      to: "/auth/outgoing",
+      to: "/expense/to-pay",
     },
     {
       name: "incomming",

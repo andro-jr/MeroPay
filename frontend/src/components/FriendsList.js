@@ -22,6 +22,7 @@ const FriendsList = () => {
     const res = await getAllFriends(userId);
     setFriends(res);
   };
+  
   const fetchPendingFriends = async (userId) => {
     const res = await getPendingFriends(userId);
     setPendingFriends(res);

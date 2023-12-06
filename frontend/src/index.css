@@ -8,6 +8,7 @@
 
 :root {
   --white: #ffffff;
+  --light-black: #f5f4fb;
   --black: #312e2e;
   --gray__gradient: linear-gradient(
     0deg,
@@ -214,6 +215,10 @@ body {
 .custom_secondary_button .button_text {
   z-index: 2;
   position: relative;
+}
+
+.forLoaderButton {
+  max-height: 2rem;
 }
 
 .active-icon {
@@ -1201,7 +1206,7 @@ input:-webkit-autofill:active {
   flex-direction: column;
 }
 
-.unequal-split__select label{
+.unequal-split__select label {
   color: var(--blue);
   font-weight: 500;
 }
@@ -1212,7 +1217,7 @@ input:-webkit-autofill:active {
   padding: 0.8rem 1rem;
   width: 100%;
   appearance: none;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 .members-number__select-and-amount input {
@@ -1269,7 +1274,7 @@ input:-webkit-autofill:active {
   position: relative;
   width: fit-content;
   margin-top: 2rem;
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 
 .split_headline::after {
@@ -1314,7 +1319,7 @@ input:-webkit-autofill:active {
   transform: translate(-10%, -110%);
   color: var(--blue);
   font-weight: 500;
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 
 .equal-expense-amount__provider {
@@ -1327,13 +1332,123 @@ input:-webkit-autofill:active {
   margin-top: 1rem;
 }
 
-
-.unequal-expenseform-value input{
+.unequal-expenseform-value input {
   outline: none;
   border: 1px solid var(--black);
   border-radius: 3px;
   padding: 0.8rem 1rem;
   width: 100%;
-  font-size: .9rem;
+  font-size: 0.9rem;
+}
 
+/* To pay page css */
+
+.payment-expense-title {
+  padding-left: 1rem;
+}
+.payment-expense {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--black);
+  padding-bottom: 1rem;
+
+  line-height: 150%;
+}
+
+.expense-table {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.expense-table tr {
+  /* border: 1px solid red; */
+  border-top: 2px solid var(--light-black);
+  border-bottom: 2px solid var(--light-black);
+}
+
+.expense-table tr th {
+  /* border: 1px solid black; */
+  /* padding: .5rem; */
+  padding: 1rem 1rem;
+  width: 23%;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--black);
+  text-align: left;
+}
+
+.expense-table tr th:first-child {
+  width: 40%;
+  text-align: left;
+}
+
+.expense-table tr > td {
+  padding: 1rem;
+}
+
+.expense-table tr > td .expense-name-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+
+.expense-table tr > td .expense-name-container .square {
+  width: 70px;
+  height: 70px;
+  aspect-ratio: 1/1;
+  border: 1px solid var(--gray);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expense-table tr td .expense-name-container .square .circle {
+  width: 15px;
+  aspect-ratio: 1/1;
+  border: 1px solid var(--gray);
+  background-color: var(--gray);
+  border-radius: 50%;
+}
+
+.expense-name-box {
+  /* width: 50%; */
+  border: none;
+  /* padding: 0; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.2rem;
+}
+
+.expense-name-box p {
+  font-size: 1rem;
+  padding: 0;
+  font-weight: 500;
+}
+
+.expense-name-box span {
+  /* font-size: .7rem; */
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--gray);
+}
+
+.expense-pay-button {
+  padding: 0.3rem 1.3rem;
+  border: 1px solid var(--blue);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--black);
+  transition: 0.4s background ease-in-out, 0.2s color ease, 0.2s border ease;
+  /* transition: 0.2s color ease-in-out, .4s all ease; */
+}
+
+.expense-pay-button:hover {
+  border: none;
+  background: var(--blue__gradient);
+  color: var(--white);
 }

@@ -10,6 +10,7 @@ import NotFound from './pages/NotFound';
 import HomeContents from './components/home/HomeContents';
 import ReceiveExpenses from './components/home/ReceiveExpenses';
 import Settings from './components/home/Settings';
+import PayExpense from './components/home/PayExpense';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
       <Route path='*' element={<NotFound />} />
       <Route path='/' element={<Home />}>
         <Route path='/' element={<HomeContents />} />
+        <Route path='/expense/to-pay' element={<PayExpense />} />
         <Route path='/expense/to-receive' element={<ReceiveExpenses />} />
         <Route path='/settings' element={<Settings />} />
       </Route>
