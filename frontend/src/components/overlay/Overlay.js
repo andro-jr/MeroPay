@@ -12,8 +12,6 @@ const Overlay = ({ isOpen, isClose, children }) => {
     outline-none 
     focus:outline-none
     bg-neutral-800/70
-    border-2
-    border-green-500
     `}
     >
       {children}

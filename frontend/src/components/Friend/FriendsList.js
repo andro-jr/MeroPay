@@ -6,22 +6,31 @@ import FriendsProfile from "./FriendsProfile";
 import FriendsRequest from "./FriendRequest";
 import DashSubHead from "../DashSubHead";
 import DashLink from "../DashLink";
-import { getAllFriends, getPendingFriends } from "../../api/friend";
+import { getAllFriends, getPendingFriends, removeFriend } from "../../api/friend";
 import { AuthContext } from "../../context/AuthProvider";
 import { RefreshDataContext } from "../../context/RefreshDataProvider";
 import FriendsListOverlay from "./FriendsListOverlay";
 import Loader from "../Loader";
 import PendingRequestOverlay from "./PendingRequestOverlay";
+import NotificationProvider, { NotificationContext } from "../../context/NotificationProvider";
 
 const FriendsList = () => {
   const { authInfo } = useContext(AuthContext);
   const userId = authInfo.profile?.id;
   const { handleRefresh, refreshBool } = useContext(RefreshDataContext);
+   // notificaton provider
+  //  const { updateNotification } = useContext(NotificationContext);
 
+  const [isFriend, setIsFriend] = useState(true);
+
+  //loading state
   const [loading, setLoading] = useState(false);
+
+  // getting list of friends
   const [friends, setFriends] = useState([]);
   const [pendingFriends, setPendingFriends] = useState([]);
 
+  // checking if the modal is open
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPendingModalOpen, setIsPendingModalOpen] = useState(false);
 
@@ -38,7 +47,6 @@ const FriendsList = () => {
     setPendingFriends(res);
     setLoading(false);
   };
-
   
   const openModal = () => {
     setIsModalOpen(true);
@@ -72,6 +80,7 @@ const FriendsList = () => {
             <FriendsListOverlay
               openModal={isModalOpen}
               closeModal={closeModal}
+              // onClick = {removeFriends}
             />
           )}
         </div>

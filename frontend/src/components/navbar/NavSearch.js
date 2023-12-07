@@ -41,7 +41,7 @@ const NavSearch = ({}) => {
     const { value } = e.target;
     setSearch([value]);
     const { user, error } = await searchFriend(value, userId);
-    console.log(error);
+    // console.log(error);
     const result = user ? [user] : [];
 
     setSearchResult(result);
@@ -92,7 +92,7 @@ const NavSearch = ({}) => {
                         <li key={index} className='text-md name'>
                           {user.name}
                         </li>
-                        <li key={index} className='text-sm email'>
+                        <li className='text-sm email'>
                           {user.email}
                         </li>
                       </div>
@@ -114,7 +114,7 @@ const NavSearch = ({}) => {
                 ))}
               </ul>
             ) : (
-              <p className='text-sm text-gray-500'>Your friends don't exist</p>
+              <p className='text-sm text-gray-500'>Search for friends</p>
             )}
           </div>
         )}

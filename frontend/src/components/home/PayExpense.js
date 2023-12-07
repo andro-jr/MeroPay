@@ -7,7 +7,7 @@ const PayExpense = () => {
       <div className="payment-container">
         {/* expense title */}
         <div className="payment-expense-title">
-          <h1 className="payment-expense">Expense To Pay</h1>
+          <h1 className="payment-expense dashPrimaryHead">Expense To Pay</h1>
         </div>
 
         {/* expense-title container */}
