@@ -1367,7 +1367,7 @@ input:-webkit-autofill:active {
 
 .expense-table tr {
   /* border: 1px solid red; */
-  border-top: 2px solid var(--light-black);
+  /* border-top: 2px solid var(--light-black); */
   border-bottom: 2px solid var(--light-black);
 }
 
@@ -1453,7 +1453,7 @@ input:-webkit-autofill:active {
 }
 
 .expense-pay-button:hover {
-  border: none;
+  border: 1px solid transparent;
   background: var(--blue__gradient);
   color: var(--white);
 }
