@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../context/AuthProvider';
-import { NotificationContext } from '../context/NotificationProvider';
-import { acceptFriendRequest, rejectFriendRequest } from '../api/friend';
-import { RefreshDataContext } from '../context/RefreshDataProvider';
+import { AuthContext } from '../../context/AuthProvider';
+import { NotificationContext } from '../../context/NotificationProvider';
+import { acceptFriendRequest, rejectFriendRequest } from '../../api/friend';
+import { RefreshDataContext } from '../../context/RefreshDataProvider';
 
 const FriendsRequest = ({ id: friendId, name, email, avatar }) => {
   const { updateNotification } = useContext(NotificationContext);

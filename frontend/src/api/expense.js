@@ -15,3 +15,28 @@ export const createExpense = async ({owner, total, members}) => {
   }
 };
 
+
+export const toPayExpense = async (userId) => {
+  try {
+    const {data} = await client.get(`/expense/to-pay/${userId}`);
+    // console.log(data);
+    return data;
+  } catch (err) {
+    const { response } = err;
+    if (response?.data) return response.data;
+    return { error: err.message || err };
+  }
+};
+
+export const toReceiveExpense = async (userId) => {
+  try {
+    const {data} = await client.get(`/expense/to-receive/${userId}`);
+    console.log(data);
+    return data;
+  } catch (err) {
+    const { response } = err;
+    if (response?.data) return response.data;
+    return { error: err.message || err };
+  }
+};
+

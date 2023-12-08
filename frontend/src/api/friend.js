@@ -88,3 +88,38 @@ export const addFriend = async (friendId, userId) => {
     return { error: err.message || err };
   }
 };
+
+
+export const cancelFriendRequest = async (userId, friendId) => {
+  try {
+    const { data } = await client.post('/friend/cancel-request', {
+      userId,
+      friendId,
+    });
+    return data;
+  } catch (err) {
+    const { response } = err;
+
+    if (response?.data) return response.data;
+
+    return { error: err.message || err };
+  }
+};
+
+export const removeFriend = async (userId, friendId) => {
+  try {
+    const { data } = await client.post('/friend/remove-friend', {
+      userId,
+      friendId,
+    });
+    return data;
+  } catch (err) {
+    const { response } = err;
+
+    if (response?.data) return response.data;
+
+    return { error: err.message || err };
+  }
+};
+
+

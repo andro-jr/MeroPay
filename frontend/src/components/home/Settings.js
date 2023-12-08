@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import DashboardContainer from '../DashboardContainer';
+import DashboardContainer from '../Dashboard/DashboardContainer';
 import DashPrimaryHead from '../DashPrimaryHead';
 import FormInput from '../Form/FormInput';
 import Button from '../Button';

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import DashboardContainer from "../DashboardContainer";
+import DashboardContainer from "../Dashboard/DashboardContainer";
 import { AuthContext } from "../../context/AuthProvider";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import AddExpense from "../Expense/AddExpense";

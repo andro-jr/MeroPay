@@ -3,7 +3,7 @@ import { IoHome } from "react-icons/io5";
 import { GiReceiveMoney, GiMoneyStack, GiPayMoney } from "react-icons/gi";
 import { AiTwotoneSetting } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { TabContext } from "../context/TabProvider";
+import { TabContext } from "../../context/TabProvider";
 
 const DashboardOption = (to) => {
   const { tabIndex, setTabIndex } = useContext(TabContext);
