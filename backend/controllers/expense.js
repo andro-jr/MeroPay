@@ -4,7 +4,7 @@ const Expense = require("../models/expenses");
 const User = require("../models/user");
 
 exports.createExpense = async (req, res) => {
-  const { owner, total, members } = req.body;
+  const { owner, total, members, expenseName } = req.body;
 
   if (!isValidObjectId(owner)) return sendError(res, "Invalid Request");
 
@@ -12,6 +12,7 @@ exports.createExpense = async (req, res) => {
     owner,
     total,
     members,
+    expenseName,
   });
 
   const memberTotal = members
@@ -113,11 +114,11 @@ exports.updateExpenses = async (req, res) => {
 };
 
 exports.approveExpense = async (req, res) => {
-  const { expesnseId, userId } = req.body;
+  const { expenseId, userId } = req.body;
 
-  if (!isValidObjectId(userId) || !isValidObjectId(expesnseId))
+  if (!isValidObjectId(userId) || !isValidObjectId(expenseId))
     return sendError(res, "Invalid Request");
-  const expense = await Expense.findById(expesnseId);
+  const expense = await Expense.findById(expenseId);
   if (!expense) return sendError(res, "Expense Not Found");
 
   await Promise.all(
