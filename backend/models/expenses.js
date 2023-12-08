@@ -39,10 +39,6 @@ const expenseSchema = mongoose.Schema(
       default: false,
     },
     members: [memberSchema],
-    total: {
-      type: Number,
-      required: true,
-    },
   },
   { timestamps: true }
 );

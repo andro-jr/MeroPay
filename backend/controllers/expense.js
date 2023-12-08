@@ -4,13 +4,12 @@ const Expense = require("../models/expenses");
 const User = require("../models/user");
 
 exports.createExpense = async (req, res) => {
-  const { owner, total, members, expenseName } = req.body;
+  const { owner, members, expenseName } = req.body;
 
   if (!isValidObjectId(owner)) return sendError(res, "Invalid Request");
 
   const newExpense = new Expense({
     owner,
-    total,
     members,
     expenseName,
   });
