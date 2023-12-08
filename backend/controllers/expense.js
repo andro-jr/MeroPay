@@ -148,3 +148,15 @@ exports.approveExpense = async (req, res) => {
 
   res.send({ message: "Expense approved" });
 };
+
+exports.getExpenseDetails = async (req, res) => {
+  const { expenseId } = req.params;
+
+  if (!isValidObjectId(expenseId)) return sendError(res, "Invalid ID");
+
+  const expense = await Expense.findById(expenseId);
+
+  if (!expense) return sendError(res, "Expense not found!", 404);
+
+  res.send(expense);
+};
