@@ -60,6 +60,17 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+
+.small-screen-overlay{
+  display: none;
+}
+
+@media only screen and (max-width: 800px) {
+  .small-screen-overlay{
+    display: flex;
+  }
+}
+
 .small{
   width: 25px !important;
   height: 25px !important;
@@ -358,6 +369,15 @@ input:-webkit-autofill:active {
   padding: 0.7rem 8.75rem;
 }
 
+
+@media only screen and (max-width: 912px) {
+  .nav-container {
+    padding: 0.7rem 4.5rem;
+  }
+}
+
+
+
 .logo {
   display: flex;
   align-items: center;
@@ -432,6 +452,14 @@ input:-webkit-autofill:active {
   padding-top: 1rem;
   /* border: 1px solid green; */
 }
+
+@media only screen and (max-width: 1200px) {
+  .homepage{
+    padding: 0 70px;
+    padding-top: 1rem;
+  }
+}
+
 .home-container {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
