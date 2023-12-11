@@ -9,6 +9,9 @@ const { generateMailTransporter } = require("../utils/mail");
 const {
   expenseApprovalTemplate,
 } = require("../emailtemplates/expenseApprovalTemplate");
+const {
+  expenseApprovedTemplate,
+} = require("../emailtemplates/expenseApprovedTemplate");
 
 exports.createExpense = async (req, res) => {
   const { owner, members, expenseName } = req.body;
@@ -136,8 +139,6 @@ exports.updateExpenses = async (req, res) => {
     html: expenseApprovalTemplate(expense.expenseName, user.name),
   });
 
-  // expenseApprovalTemplate
-
   expense.save();
 
   res.send({ message: "Payment sent for approval" });
@@ -158,6 +159,17 @@ exports.approveExpense = async (req, res) => {
       }
     })
   );
+
+  const user = await User.findById(userId);
+
+  var transport = generateMailTransporter();
+
+  transport.sendMail({
+    form: "meropaytest@gmail.com",
+    to: user.email,
+    subject: "Expense Approved",
+    html: expenseApprovedTemplate(expense.expenseName),
+  });
 
   let flag = 0;
 
