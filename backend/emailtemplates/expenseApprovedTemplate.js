@@ -1,4 +1,4 @@
-exports.resetPasswordLinkTemplate = (link) => `<!DOCTYPE html>
+exports.expenseApprovedTemplate = (expenseName) => `<!DOCTYPE html>
 
 <html
   lang="en"
@@ -322,7 +322,7 @@ exports.resetPasswordLinkTemplate = (link) => `<!DOCTYPE html>
                                     "
                                   >
                                     <span class="tinyMce-placeholder"
-                                      >Reset Password</span
+                                      >Payment Approved</span
                                     >
                                   </h3>
                                 </td>
@@ -332,7 +332,7 @@ exports.resetPasswordLinkTemplate = (link) => `<!DOCTYPE html>
                               border="0"
                               cellpadding="0"
                               cellspacing="0"
-                              class="paragraph_block block-3"
+                              class="paragraph_block block-4"
                               role="presentation"
                               style="
                                 mso-table-lspace: 0pt;
@@ -365,11 +365,11 @@ exports.resetPasswordLinkTemplate = (link) => `<!DOCTYPE html>
                                       mso-line-height-alt: 19.2px;
                                     "
                                   >
-                                    <p style="margin: 0; margin-bottom: 16px">
-                                      Click the following button to reset your
-                                      passsword.
+                                    <p style="margin: 0">
+                                      Your payment for expense
+                                      <strong>${expenseName}</strong> has been
+                                      approved.
                                     </p>
-                                    
                                   </div>
                                 </td>
                               </tr>
@@ -378,7 +378,7 @@ exports.resetPasswordLinkTemplate = (link) => `<!DOCTYPE html>
                               border="0"
                               cellpadding="10"
                               cellspacing="0"
-                              class="button_block block-4"
+                              class="button_block block-5"
                               role="presentation"
                               style="
                                 mso-table-lspace: 0pt;
@@ -396,7 +396,7 @@ exports.resetPasswordLinkTemplate = (link) => `<!DOCTYPE html>
 <center style="color:#ffffff; font-family:Arial, sans-serif; font-size:16px">
 <!
                                     [endif]--><a
-                                      href="${link}"
+                                      href="http://localhost:3000"
                                       style="
                                         text-decoration: none;
                                         display: inline-block;
@@ -433,7 +433,7 @@ exports.resetPasswordLinkTemplate = (link) => `<!DOCTYPE html>
                                             word-break: break-word;
                                             line-height: 32px;
                                           "
-                                          >Reset Password</span
+                                          >Visit App</span
                                         ></span
                                       ></a
                                     >
