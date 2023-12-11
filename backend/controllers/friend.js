@@ -46,7 +46,7 @@ exports.addFriend = async (req, res) => {
     form: "meropaytest@gmail.com",
     to: friend.email,
     subject: "New Friend Request",
-    html: friendRequestTemplate(friend.name),
+    html: friendRequestTemplate(user.name),
   });
 
   // friendRequestAcceptedTemplate
