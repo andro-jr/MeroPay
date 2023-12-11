@@ -10,6 +10,7 @@ import Loader from "../Loader";
 import OwnerNameFetcher from "./OwnerNameFetcher";
 import { TabContext } from "../../context/TabProvider";
 import { useNavigate } from "react-router-dom";
+import { LoaderContext } from "../../context/LoaderProvider";
 
 const EqualExpense = () => {
   const [loading, setLoading] = useState(false);
@@ -49,6 +50,8 @@ const EqualExpense = () => {
   const [usersId, setUsersId] = useState("");
   const [amount, setAmount] = useState("");
   const [isExpenseNameDisabled, setIsExpenseNameDisabled] = useState(false);
+  const [selectedFriends, setSelectedFriends] = useState([]);
+  const { setShowLoader } = useContext(LoaderContext);
 
   useEffect(() => {
     fetchAllFriends(userId);
@@ -75,15 +78,26 @@ const EqualExpense = () => {
   };
 
   const handleAddMember = () => {
-    if (usersId && amount) {
+    if (usersId && amount && !selectedFriends.includes(usersId)) {
       const selectedFriend = friends.find(
         (friend) => friend.userId === usersId
       );
       if (selectedFriend) {
-        setMembers([...members, { userId: selectedFriend.userId, amount }]);
+        const newMember = {
+          userId: selectedFriend.userId,
+          amount: amount,
+        };
+
+        setMembers((prevMembers) => [...prevMembers, newMember]);
         setUsersId("");
         setAmount("");
         setIsExpenseNameDisabled(true);
+
+        // Update selectedFriends to track the selected user
+        setSelectedFriends((prevSelectedFriends) => [
+          ...prevSelectedFriends,
+          usersId,
+        ]);
       }
     }
   };
@@ -103,8 +117,9 @@ const EqualExpense = () => {
       updateNotification("error", "Please add at least one member");
       return;
     }
-
+    setShowLoader(true);
     const { error, message } = await createExpense(requestData);
+    setShowLoader(false);
     if (error) updateNotification("error", error);
     if (message) updateNotification("success", message);
 

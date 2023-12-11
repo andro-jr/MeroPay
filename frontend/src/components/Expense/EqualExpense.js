@@ -44,6 +44,7 @@ const EqualExpense = () => {
   const [usersId, setUsersId] = useState("");
   const [amount, setAmount] = useState("");
   const [isExpenseNameDisabled, setIsExpenseNameDisabled] = useState(false);
+  const [selectedFriends, setSelectedFriends] = useState([]);
 
   useEffect(() => {
     fetchAllFriends(userId);
@@ -70,25 +71,25 @@ const EqualExpense = () => {
   };
 
   const handleAddMember = () => {
-    if (usersId && amount) {
+    if (usersId && amount && !selectedFriends.includes(usersId)) {
       const selectedFriend = friends.find(
         (friend) => friend.userId === usersId
       );
       if (selectedFriend) {
-        // Create a new member object with the selected user and the entered amount
         const newMember = {
           userId: selectedFriend.userId,
           amount: amount,
         };
 
-        // Update the members state by creating a new array with the new member
         setMembers((prevMembers) => [...prevMembers, newMember]);
-
-        // Do not reset the amount here to keep it for the next addition
         setUsersId("");
-
-        // Disable the expense name input field
         setIsExpenseNameDisabled(true);
+
+        // Update selectedFriends to track the selected user
+        setSelectedFriends((prevSelectedFriends) => [
+          ...prevSelectedFriends,
+          usersId,
+        ]);
       }
     }
   };
@@ -162,6 +163,18 @@ const EqualExpense = () => {
                 {friend.name}
               </option>
             ))}
+
+            {/* {friends
+              .filter((friend) => !selectedFriends.includes(friend.userId))
+              .map((friend) => (
+                <option
+                  key={friend.userId}
+                  value={friend.userId}
+                  className="outline-none border border-gray-700 px-4 py-2 mt-2 pl-1 rounded-sm capitalize"
+                >
+                  {friend.name}
+                </option>
+              ))} */}
           </select>
 
           <label htmlFor="amount">Amount (Same for each)</label>
