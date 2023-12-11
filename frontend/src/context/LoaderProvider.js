@@ -7,7 +7,7 @@ const LoaderProvider = ({ children }) => {
   return (
     <LoaderContext.Provider value={{ setShowLoader }}>
       {showLoader && (
-        <div className='fixed w-full h-screen backdrop-blur-md border-2 z-10'>
+        <div className='fixed w-full h-screen backdrop-blur-md border-2 z-[200]'>
           <img src='/paper-plane.gif' alt='' className='h-full ' />
         </div>
       )}

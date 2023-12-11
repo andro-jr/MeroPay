@@ -3,15 +3,28 @@ import { AuthContext } from "../context/AuthProvider";
 import { GrFormClose } from "react-icons/gr";
 
 import ButtonSecondVariant from "./ButtonSecondVariant";
+import { ExpenseContext } from "../context/ExpenseProvider";
+import { useNavigate } from "react-router-dom";
+import { TabContext } from "../context/TabProvider";
 
 const Welcome = ({ trigger }) => {
   const { authInfo } = useContext(AuthContext);
   const username = authInfo.profile?.name;
+  const { setTabIndex } = useContext(TabContext);
+
+  const { isOpen, closeModal } = useContext(ExpenseContext);
+  const navigate = useNavigate();
 
   const [open, setOpen] = useState(trigger);
 
   const handleClick = (trigger) => {
     setOpen(!trigger);
+  };
+
+  const start = () => {
+    navigate("/");
+    setOpen(!trigger);
+    setTabIndex(0);
   };
 
   const [width, setWidth] = useState(0);
@@ -40,7 +53,7 @@ const Welcome = ({ trigger }) => {
                   Welcome to MeroPay
                 </p>
                 <span
-                  className="welcome-title__background-second"
+                  className="welcome-title__background-second capitalize"
                   style={{ width: `${width}%` }}
                 >
                   {username}
@@ -54,7 +67,9 @@ const Welcome = ({ trigger }) => {
                 with MeroPay!
               </span>
 
-              <ButtonSecondVariant title="add expense" />
+              <button className="secondVariant" onClick={() => start()}>
+                Start
+              </button>
             </div>
           </div>
         </div>

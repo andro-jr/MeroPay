@@ -11,8 +11,8 @@ const AddExpense = () => {
   const { isOpen, closeModal } = useContext(ExpenseContext);
   const [openDrop, setOpenDrop] = useState(false);
 
-  const [selectedNumber, setSelectedNumber] = useState(1);
-  const [selectedUsers, setSelectedUsers] = useState(Array(1).fill(""));
+  // const [selectedNumber, setSelectedNumber] = useState(1);
+  // const [selectedUsers, setSelectedUsers] = useState(Array(1).fill(""));
   const [amount, setAmount] = useState(0);
   const [splitAmount, setSplitAmount] = useState(0);
 
@@ -43,10 +43,7 @@ const AddExpense = () => {
 
   const handleClick = () => {
     closeModal();
-    setSelectedNumber(1);
-    setSplitAmount();
-    setAmount();
-    setSelectedUsers(Array(1).fill(""));
+
   };
 
   return (
