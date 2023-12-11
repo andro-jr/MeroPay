@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import Button from "../Button";
 import { ExpenseContext } from "../../context/ExpenseProvider";
 import { getAllFriends } from "../../api/friend";
 import { NotificationContext } from "../../context/NotificationProvider";
@@ -10,6 +9,7 @@ import Loader from "../Loader";
 import OwnerNameFetcher from "./OwnerNameFetcher";
 import { TabContext } from "../../context/TabProvider";
 import { useNavigate } from "react-router-dom";
+import { LoaderContext } from "../../context/LoaderProvider";
 
 const EqualExpense = () => {
   const [loading, setLoading] = useState(false);
@@ -19,16 +19,11 @@ const EqualExpense = () => {
   const { setTabIndex } = useContext(TabContext);
   const { isOpen, closeModal } = useContext(ExpenseContext);
   const [selectedNumber, setSelectedNumber] = useState(1);
-
-  const [selectedUsers, setSelectedUsers] = useState(Array(1).fill(""));
-  // console.log(selectedUsers);
-
-  const [disabledUsers, setDisabledUsers] = useState([]);
+  const { setShowLoader } = useContext(LoaderContext);
 
   //select expenseType
   const [equal, setEqual] = useState(true);
   const [unequal, setUnEqual] = useState(true);
-  const [label, setLabel] = useState(false);
 
   //fetching friends
   const { authInfo, isAuth } = useContext(AuthContext);
@@ -76,26 +71,27 @@ const EqualExpense = () => {
 
   const handleAddMember = () => {
     if (usersId && amount) {
-      const selectedFriend = friends.find((friend) => friend.userId === usersId);
+      const selectedFriend = friends.find(
+        (friend) => friend.userId === usersId
+      );
       if (selectedFriend) {
         // Create a new member object with the selected user and the entered amount
         const newMember = {
           userId: selectedFriend.userId,
           amount: amount,
         };
-  
+
         // Update the members state by creating a new array with the new member
         setMembers((prevMembers) => [...prevMembers, newMember]);
-  
+
         // Do not reset the amount here to keep it for the next addition
         setUsersId("");
-  
+
         // Disable the expense name input field
         setIsExpenseNameDisabled(true);
       }
     }
   };
-  
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -112,8 +108,10 @@ const EqualExpense = () => {
       updateNotification("error", "Please add at least one member");
       return;
     }
+    setShowLoader(true);
 
     const { error, message } = await createExpense(requestData);
+    setShowLoader(false);
     if (error) updateNotification("error", error);
     if (message) updateNotification("success", message);
 
@@ -125,12 +123,6 @@ const EqualExpense = () => {
     navigate("/expense/to-receive");
     isAuth();
   };
-
-  useEffect(() => {
-    // Reset disabled users when the selected number changes
-    setDisabledUsers([]);
-    // calcEqual(amount);
-  }, [selectedNumber, amount, loading]);
 
   return (
     <div>
@@ -165,7 +157,7 @@ const EqualExpense = () => {
               <option
                 key={friend.userId}
                 value={friend.userId}
-                className="outline-none border border-gray-700 px-4 py-2 mt-2 pl-1 rounded-sm"
+                className="outline-none border border-gray-700 px-4 py-2 mt-2 pl-1 rounded-sm capitalize"
               >
                 {friend.name}
               </option>
@@ -178,7 +170,15 @@ const EqualExpense = () => {
             id="amount"
             autoComplete="off"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => {
+              const enteredValue = e.target.value;
+
+              // Check if the entered value is a valid number
+              if (!isNaN(enteredValue)) {
+                // Update the state only if it's a valid number
+                setAmount(enteredValue);
+              }
+            }}
             className="outline-none border border-gray-700 px-4 py-2 mt-2 rounded-sm"
             disabled={isExpenseNameDisabled}
           />
@@ -191,18 +191,28 @@ const EqualExpense = () => {
           </button>
         </div>
 
-        <div>
+        <div className="mt-16">
           {/* Display the added members */}
-          {members.map((member, index) => (
-            <div key={index} className="flex gap-4">
-              <OwnerNameFetcher ownerId={member.userId} />
-              {` Amount: ${member.amount}`}
-            </div>
-          ))}
+          <table className="w-full">
+            <tr>
+              <th className="border-r border-b px-4 py-2 w-56">
+                Expense Member
+              </th>
+              <th className="border-b px-4 py-2 w-56">Amount ( for each )</th>
+            </tr>
+            {members.map((member, index) => (
+              <tr key={index}>
+                <td className="border-b border-r px-4 py-2 w-56">
+                  <OwnerNameFetcher ownerId={member.userId} />
+                </td>
+                <td className="border-b  px-4 py-2 w-56">{` Rs. ${member.amount}`}</td>
+              </tr>
+            ))}
+          </table>
         </div>
         <button
           type="submit"
-          className="mt-6 rounded-xl border border-blue-600 px-6 py-4 bg-blue-600 text-white"
+          className="mt-12 rounded-xl border border-blue-600 px-6 py-4 w-full bg-blue-600 text-white"
         >
           Submit
         </button>

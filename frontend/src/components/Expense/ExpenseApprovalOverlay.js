@@ -53,11 +53,11 @@ const ExpenseApprovalOverlay = ({
         <h3 className="mb-12">
           <span className="3xl capitalize">Payment Recipt</span>
         </h3>
-        <div className="flex flex-col-items-center justify-center paymentQR_image p-8 ">
+        <div className="flex flex-col-items-center justify-center paymentQR_image p-8 !w-auto !h-auto">
           <img
             src={screenshot}
             alt="payment receipt"
-            className="w-[200px] h-[200px] pointer-events-none"
+            className="!w-auto !h-auto pointer-events-none object-cover object-center"
           />
         </div>
       </div>

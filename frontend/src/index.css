@@ -71,13 +71,11 @@ body {
   display: flex;
   gap: 1rem;
   align-items: center;
-  /* justify-content: space-between; */
   border-radius: 50px;
   background: var(--blue__gradient);
   color: white;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  /* border: 1px solid var(--blue__gradient); */
   margin-left: 0;
   width: fit-content;
   max-width: 300px;

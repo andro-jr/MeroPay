@@ -169,7 +169,15 @@ const EqualExpense = () => {
             id="amount"
             autoComplete="off"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => {
+              const enteredValue = e.target.value;
+
+              // Check if the entered value is a valid number
+              if (!isNaN(enteredValue)) {
+                // Update the state only if it's a valid number
+                setAmount(enteredValue);
+              }
+            }}
             className="outline-none border border-gray-700 px-4 py-2 mt-2 rounded-sm"
           />
           <button
@@ -181,18 +189,28 @@ const EqualExpense = () => {
           </button>
         </div>
 
-        <div>
+        <div className="mt-16">
           {/* Display the added members */}
-          {members.map((member, index) => (
-            <div key={index} className="flex gap-4">
-              <OwnerNameFetcher ownerId={member.userId} />
-              {` Amount: ${member.amount}`}
-            </div>
-          ))}
+          <table className="w-full">
+            <tr>
+              <th className="border-r border-b px-4 py-2 w-56">
+                Expense Member
+              </th>
+              <th className="border-b px-4 py-2 w-56">Amount</th>
+            </tr>
+            {members.map((member, index) => (
+              <tr key={index}>
+                <td className="border-b border-r px-4 py-2 w-56">
+                  <OwnerNameFetcher ownerId={member.userId} />
+                </td>
+                <td className="border-b  px-4 py-2 w-56">{` Rs. ${member.amount}`}</td>
+              </tr>
+            ))}
+          </table>
         </div>
         <button
           type="submit"
-          className="mt-6 rounded-xl border border-blue-600 px-6 py-4 bg-blue-600 text-white"
+          className="mt-12 rounded-xl border border-blue-600 px-6 py-4 w-full bg-blue-600 text-white"
         >
           Submit
         </button>
