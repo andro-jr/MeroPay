@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const emailVerificationTokenSchema = mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
     required: true,
   },
   token: {
@@ -13,13 +13,13 @@ const emailVerificationTokenSchema = mongoose.Schema({
   },
   createAt: {
     type: Date,
-    expires: 3600,
+    expires: 120,
     default: Date.now(),
   },
 });
 
-emailVerificationTokenSchema.pre('save', async function (next) {
-  if (this.isModified('token')) {
+emailVerificationTokenSchema.pre("save", async function (next) {
+  if (this.isModified("token")) {
     this.token = await bcrypt.hash(this.token, 10);
   }
   next();
@@ -31,6 +31,6 @@ emailVerificationTokenSchema.methods.compareToken = async function (token) {
 };
 
 module.exports = mongoose.model(
-  'EmailVerificationToken',
+  "EmailVerificationToken",
   emailVerificationTokenSchema
 );

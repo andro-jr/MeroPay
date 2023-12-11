@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const passwordResetToken = mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
     required: true,
   },
   token: {
@@ -13,13 +13,13 @@ const passwordResetToken = mongoose.Schema({
   },
   createAt: {
     type: Date,
-    expires: 3600,
+    expires: 120,
     default: Date.now(),
   },
 });
 
-passwordResetToken.pre('save', async function (next) {
-  if (this.isModified('token')) {
+passwordResetToken.pre("save", async function (next) {
+  if (this.isModified("token")) {
     this.token = await bcrypt.hash(this.token, 10);
   }
   next();
@@ -30,4 +30,4 @@ passwordResetToken.methods.compareToken = async function (token) {
   return result;
 };
 
-module.exports = mongoose.model('PasswordResetToken', passwordResetToken);
+module.exports = mongoose.model("PasswordResetToken", passwordResetToken);
