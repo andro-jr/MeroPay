@@ -2,6 +2,9 @@ const { isValidObjectId } = require("mongoose");
 const { sendError, uploadImageToCloud } = require("../utils/helper");
 const Expense = require("../models/expenses");
 const User = require("../models/user");
+const {
+  expenseAddedTemplate,
+} = require("../emailtemplates/expenseAddedTemplate");
 
 exports.createExpense = async (req, res) => {
   const { owner, members, expenseName } = req.body;
@@ -19,14 +22,22 @@ exports.createExpense = async (req, res) => {
     .reduce((acc, item) => item + acc);
 
   // if (memberTotal !== +total) return sendError(res, "Total do not match");
+  const ownerUser = await User.findById(owner);
 
+  var transport = generateMailTransporter();
   members.forEach(async (member) => {
     const user = await User.findById(member.userId);
+
+    transport.sendMail({
+      form: "meropaytest@gmail.com",
+      to: user.email,
+      subject: "Expense added",
+      html: expenseAddedTemplate(expenseName, ownerUser.name),
+    });
+
     user.toPay.push(newExpense._id);
     user.save();
   });
-
-  const ownerUser = await User.findById(owner);
 
   ownerUser.toReceive.push(newExpense._id);
 
@@ -107,6 +118,22 @@ exports.updateExpenses = async (req, res) => {
     })
   );
 
+  const ownerId = expense.owner;
+
+  const user = await User.findById(userId);
+  const owner = await User.findById(ownerId);
+
+  var transport = generateMailTransporter();
+
+  transport.sendMail({
+    form: "meropaytest@gmail.com",
+    to: owner.email,
+    subject: "Approve Expense",
+    html: expenseAddedTemplate(expense.expenseName, user.name),
+  });
+
+  // expenseApprovalTemplate
+
   expense.save();
 
   res.send({ message: "Payment sent for approval" });
@@ -128,7 +155,40 @@ exports.approveExpense = async (req, res) => {
     })
   );
 
-  console.log(expense);
+  let flag = 0;
+
+  expense.members.forEach((item) => {
+    if (item.status !== "approved") {
+      flag = 1;
+    }
+  });
+
+  console.log(flag);
+  if (flag === 0) {
+    expense.completed = true;
+    console.log("expense is completed");
+  }
+
+  await expense.save();
+
+  res.send({ message: "Expense approved" });
+};
+
+exports.approveExpense = async (req, res) => {
+  const { expenseId, userId } = req.body;
+
+  if (!isValidObjectId(userId) || !isValidObjectId(expenseId))
+    return sendError(res, "Invalid Request");
+  const expense = await Expense.findById(expenseId);
+  if (!expense) return sendError(res, "Expense Not Found");
+
+  await Promise.all(
+    expense.members.map(async (item) => {
+      if (item.userId.valueOf() == userId) {
+        item.status = "approved";
+      }
+    })
+  );
 
   let flag = 0;
 

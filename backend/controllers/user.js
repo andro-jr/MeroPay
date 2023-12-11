@@ -13,6 +13,10 @@ const {
 } = require("../utils/helper");
 const { generateOTP, generateMailTransporter } = require("../utils/mail");
 const { otpTemplate } = require("../emailtemplates/otpEmailTemplate");
+const { welcomeTemplate } = require("../emailtemplates/welcomeTemplate");
+const {
+  resetPasswordLinkTemplate,
+} = require("../emailtemplates/resetPasswordLinkTemplate");
 
 exports.create = async (req, res) => {
   const { name, email, password } = req.body;
@@ -94,12 +98,10 @@ exports.verifyEmail = async (req, res) => {
   var transport = generateMailTransporter();
 
   transport.sendMail({
-    form: "verification@ourapp.com",
+    form: "meropaytest@gmail.com",
     to: user.email,
     subject: "Welcome Email",
-    html: `
-    <h1>Welcome to our app.</h1>
-    `,
+    html: welcomeTemplate(),
   });
 
   const jwtToken = jwt.sign({ euserId: user._id }, process.env.JWT_SECRET);
@@ -132,7 +134,7 @@ exports.resendEmailVerificationToken = async (req, res) => {
     owner: userId,
   });
   if (hasToken) {
-    return sendError(res, "Next token only after one hour");
+    return sendError(res, "Next token only after two minutes");
   }
 
   // Generate 6 digit OPT
@@ -192,9 +194,7 @@ exports.forgetPassword = async (req, res) => {
     form: "security@ourapp.com",
     to: user.email,
     subject: "Reset Password",
-    html: `<p>Click here to reset your password</p>
-    <a href='${resetPasswordUrl}' target='_blank'>Change Password</a>
-    `,
+    html: resetPasswordLinkTemplate(resetPasswordUrl),
   });
 
   res.json({ message: "Reset link sent to your email" });
@@ -221,16 +221,6 @@ exports.resetPassword = async (req, res) => {
   await user.save();
 
   await PasswordResetToken.findByIdAndDelete(req.resetToken._id);
-
-  var transport = generateMailTransporter();
-
-  transport.sendMail({
-    form: "security@ourapp.com",
-    to: user.email,
-    subject: "Reset Password Successful",
-    html: `<p>Your password is successfully changed</p>
-    `,
-  });
 
   res.json({ message: "Password changed successfully" });
 };

@@ -1,6 +1,13 @@
 const { isValidObjectId } = require("mongoose");
 const { sendError } = require("../utils/helper");
 const User = require("../models/user");
+const { generateMailTransporter } = require("../utils/mail");
+const {
+  friendRequestTemplate,
+} = require("../emailtemplates/friendRequestTemplate");
+const {
+  friendRequestAcceptedTemplate,
+} = require("../emailtemplates/friendRequestAcceptedTemplate");
 
 exports.addFriend = async (req, res) => {
   const { userId, friendId } = req.body;
@@ -32,6 +39,17 @@ exports.addFriend = async (req, res) => {
 
   if (user.friends.includes(friendId))
     return sendError(res, "Friend already exists");
+
+  var transport = generateMailTransporter();
+
+  transport.sendMail({
+    form: "meropaytest@gmail.com",
+    to: friend.email,
+    subject: "New Friend Request",
+    html: friendRequestTemplate(friend.name),
+  });
+
+  // friendRequestAcceptedTemplate
 
   await user.sentRequest.push(friendId);
   await friend.receivedRequest.push(userId);
@@ -75,6 +93,15 @@ exports.acceptRequest = async (req, res) => {
 
   await user.friends.push(friendId);
   await friend.friends.push(userId);
+
+  var transport = generateMailTransporter();
+
+  transport.sendMail({
+    form: "meropaytest@gmail.com",
+    to: friend.email,
+    subject: "Friend Request Accepeted",
+    html: friendRequestAcceptedTemplate(user.name),
+  });
 
   user.save();
   friend.save();
