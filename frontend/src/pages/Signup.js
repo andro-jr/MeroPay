@@ -21,14 +21,53 @@ const Signup = () => {
     password: "",
   });
 
+  const [passwordError, setPasswordError] = useState("");
+
+  // const validateUserInput = (userInput) => {
+  //   const { username, email, password } = userInput;
+  //   const isValidEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  //   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+
+  //   function containsSpecialChars(str) {
+  //     const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  //     return specialChars.test(str);
+  //   }
+
+  //   if (!username) return { ok: false, err: "Name is missing" };
+  //   if (containsSpecialChars(username) || username.includes(" "))
+  //     return {
+  //       ok: false,
+  //       err: "Username cannot contain space any special characters.",
+  //     };
+  //   if (!email.trim()) return { ok: false, err: "Email is missing" };
+  //   if (!isValidEmail.test(email))
+  //     return { ok: false, err: "Email is invalid" };
+  //   if (!password.trim()) return { ok: false, err: "Password is missing" };
+  //   if (password.length < 8)
+  //     return { ok: false, err: "Password must be atleast 8 characters" };
+
+  //   return { ok: true };
+  // };
+
   const validateUserInput = (userInput) => {
     const { username, email, password } = userInput;
     const isValidEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
     function containsSpecialChars(str) {
       const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
       return specialChars.test(str);
+    }
+
+    function hasUppercase(str) {
+      return /[A-Z]/.test(str);
+    }
+
+    function hasLowercase(str) {
+      return /[a-z]/.test(str);
+    }
+
+    function hasNumber(str) {
+      return /\d/.test(str);
     }
 
     if (!username) return { ok: false, err: "Name is missing" };
@@ -42,7 +81,24 @@ const Signup = () => {
       return { ok: false, err: "Email is invalid" };
     if (!password.trim()) return { ok: false, err: "Password is missing" };
     if (password.length < 8)
-      return { ok: false, err: "Password must be atleast 8 characters" };
+      return { ok: false, err: "Password must be at least 8 characters" };
+    if (!hasUppercase(password))
+      return {
+        ok: false,
+        err: "Password must contain at least one uppercase letter",
+      };
+    if (!hasLowercase(password))
+      return {
+        ok: false,
+        err: "Password must contain at least one lowercase letter",
+      };
+    if (!hasNumber(password))
+      return { ok: false, err: "Password must contain at least one number" };
+    if (!containsSpecialChars(password))
+      return {
+        ok: false,
+        err: "Password must contain at least one special character",
+      };
 
     return { ok: true };
   };
@@ -53,7 +109,6 @@ const Signup = () => {
     e.preventDefault();
 
     const { value, name } = e.target;
-    // console.log(value, name);
     setInputData({ ...inputData, [name]: value });
   };
 
