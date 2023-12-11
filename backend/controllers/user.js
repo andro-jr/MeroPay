@@ -176,7 +176,7 @@ exports.forgetPassword = async (req, res) => {
 
   const hasToken = await PasswordResetToken.findOne({ owner: user._id });
   if (hasToken) {
-    return sendError(res, "Next token only after one hour");
+    return sendError(res, "Next token only after two minutes.");
   }
 
   const token = await generateRandomByte();

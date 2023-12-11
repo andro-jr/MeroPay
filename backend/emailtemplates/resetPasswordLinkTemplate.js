@@ -390,7 +390,7 @@ exports.resetPasswordLinkTemplate = (link) => `<!DOCTYPE html>
                                 <td class="pad">
                                   <div align="center" class="alignment">
                                     <!--[if mso]>
-<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://localhost:8000" style="height:52px;width:126px;v-text-anchor:middle;" arcsize="54%" stroke="false" fillcolor="#0f5298">
+<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://localhost:3000" style="height:52px;width:126px;v-text-anchor:middle;" arcsize="54%" stroke="false" fillcolor="#0f5298">
 <w:anchorlock/>
 <v:textbox inset="0px,0px,0px,0px">
 <center style="color:#ffffff; font-family:Arial, sans-serif; font-size:16px">
