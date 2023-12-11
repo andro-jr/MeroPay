@@ -83,11 +83,11 @@ exports.getAllToPay = async (req, res) => {
 };
 
 exports.updateExpenses = async (req, res) => {
-  const { expesnseId, userId } = req.body;
+  const { expenseId, userId } = req.body;
 
-  if (!isValidObjectId(userId) || !isValidObjectId(expesnseId))
+  if (!isValidObjectId(userId) || !isValidObjectId(expenseId))
     return sendError(res, "Invalid Request");
-  const expense = await Expense.findById(expesnseId);
+  const expense = await Expense.findById(expenseId);
   if (!expense) return sendError(res, "Expense Not Found");
 
   await Promise.all(

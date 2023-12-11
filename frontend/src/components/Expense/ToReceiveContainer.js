@@ -1,18 +1,35 @@
 import React, { useContext, useEffect, useState } from "react";
-import { toReceiveExpense } from "../../api/expense";
+import { singleExpenseDetail, toReceiveExpense } from "../../api/expense";
 import { AuthContext } from "../../context/AuthProvider";
 import Loader from "../Loader";
+import { ownerDetail } from "../../api/details";
+import OwnerNameFetcher from "./OwnerNameFetcher";
+import ToReceiveAmountFetcher from "./ToReceiveAmountFetcher";
+import ToReceiveExpenseOverlay from "./ToReceiveExpenseOverlay";
 
 const ToReceiveContainer = () => {
   const { authInfo } = useContext(AuthContext);
   const userId = authInfo.profile?.id;
 
   const [expenses, setExpenses] = useState([]);
+  const [expensesId, setExpensesId] = useState();
   const [loading, setLoading] = useState(false);
+  const [ownerName, setOwnerName] = useState({});
+  const [expenseOwnerId, setExpenseOwnerId] = useState("");
 
+  const [showOverlay, setShowOverlay] = useState(false);
   //   console.log(expenses.length);
 
-  const displayToPay = async (userId) => {
+  const openModal = () => {
+    setShowOverlay(true);
+  };
+
+  const closeModal = () => {
+    setShowOverlay(false);
+    // setOwnId(null);
+  };
+
+  const displayToReceive = async (userId) => {
     try {
       setLoading(true);
       const res = await toReceiveExpense(userId);
@@ -24,13 +41,32 @@ const ToReceiveContainer = () => {
   };
 
   useEffect(() => {
-    displayToPay(userId);
+    displayToReceive(userId);
   }, [userId]);
 
-  const handleClick = () => {
-    // displayToPay(userId);
+  const expenseDetail = async (expenseId) => {
+    try {
+      const { owner } = await singleExpenseDetail(expenseId);
+      // console.log("Expense owner", owner);
+      setExpenseOwnerId(owner);
+      putOwnerId(owner);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    console.log("check passed");
+  const putOwnerId = (expenseOwnerId) => {
+    openModal();
+  };
+
+  const handleClick = (expenseId) => {
+    setExpensesId(expenseId);
+    expenseDetail(expenseId);
+  };
+
+  const formatDateString = (dateString) => {
+    const dateObject = new Date(dateString);
+    return dateObject.toLocaleDateString("en-US");
   };
 
   return (
@@ -41,7 +77,8 @@ const ToReceiveContainer = () => {
         </div>
       ) : (
         <div className="payment-container">
-          {expenses.length > 0 ? (
+          {expenses.length > 0 &&
+          expenses.some((expense) => expense !== null) ? (
             <div className="expense-container">
               <div className="expense-table">
                 <table className="expense-table">
@@ -62,30 +99,34 @@ const ToReceiveContainer = () => {
                           <td>
                             <div className="expense-name-container">
                               <div className="expense-name-box">
-                                {/* <p>{expense.name ? expense.name : "Default Name"}</p> */}
-                                <p> Milan Khaja ghar</p>
+                                <p>
+                                  {expense.expenseName
+                                    ? expense.expenseName
+                                    : `Expense-${index + 1}`}
+                                </p>
                                 <span>
-                                  Created on:
-                                  {/* {expense.date ? expense.date : "Default Date"} */}
-                                  2002-03-01
+                                  Created on:{" "}
+                                  {expense.createdAt
+                                    ? formatDateString(expense.createdAt)
+                                    : "Default Date"}
                                 </span>
                               </div>
                             </div>
                           </td>
                           <td>
-                            {/* <p>{expense.owner ? expense.owner : "Default Owner"}</p> */}
-                            <p>Leon</p>
+                            <p>
+                              <OwnerNameFetcher ownerId={expense.owner} />
+                            </p>
                           </td>
                           <td>
-                            {/* Rs. {expense.amount ? expense.amount : "Default Amount"} */}
-                            Rs. 10000
+                            <ToReceiveAmountFetcher members={expense.members} />
                           </td>
                           <td>
                             <button
                               className="expense-pay-button"
-                              onClick={() => handleClick()}
+                              onClick={() => handleClick(expense._id)}
                             >
-                              Pay
+                              Check
                             </button>
                           </td>
                         </tr>
@@ -98,6 +139,14 @@ const ToReceiveContainer = () => {
             <p>No expenses to display.</p>
           )}
         </div>
+      )}
+      {showOverlay && (
+        <ToReceiveExpenseOverlay
+          expenseModalOpen={showOverlay}
+          expenseModalClose={closeModal}
+          ownerId={expenseOwnerId}
+          expenseId={expensesId}
+        />
       )}
     </div>
   );
