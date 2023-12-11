@@ -107,7 +107,7 @@ const FriendsList = () => {
                 })
               ) : (
                 <div className="text-sm text-gray-300 text-center">
-                  You introvert have no friends
+               No friends yet, add new people
                 </div>
               )}
             </div>
@@ -144,7 +144,7 @@ const FriendsList = () => {
             })
           ) : (
             <div className="text-sm text-gray-300 text-center">
-              No one likes you
+              No pending requests
             </div>
           )}
         </div>
