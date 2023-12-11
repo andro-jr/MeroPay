@@ -5,6 +5,10 @@ const User = require("../models/user");
 const {
   expenseAddedTemplate,
 } = require("../emailtemplates/expenseAddedTemplate");
+const { generateMailTransporter } = require("../utils/mail");
+const {
+  expenseApprovalTemplate,
+} = require("../emailtemplates/expenseApprovalTemplate");
 
 exports.createExpense = async (req, res) => {
   const { owner, members, expenseName } = req.body;
@@ -129,7 +133,7 @@ exports.updateExpenses = async (req, res) => {
     form: "meropaytest@gmail.com",
     to: owner.email,
     subject: "Approve Expense",
-    html: expenseAddedTemplate(expense.expenseName, user.name),
+    html: expenseApprovalTemplate(expense.expenseName, user.name),
   });
 
   // expenseApprovalTemplate
