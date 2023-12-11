@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ownerDetail } from "../../api/details";
 
 const OwnerNameFetcher = ({ ownerId }) => {
-  console.log("ownerId", ownerId);
+  // console.log("ownerId", ownerId);
     const [ownerName, setOwnerName] = useState("Loading...");
   
     useEffect(() => {

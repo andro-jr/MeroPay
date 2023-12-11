@@ -1198,11 +1198,7 @@ input:-webkit-autofill:active {
 }
 
 .members-number__select-and-amount {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  /* border: 1px solid red; */
-  align-items: center;
-  /* justify-items:center ; */
+  display: flex;
   gap: 1rem;
 }
 
@@ -1456,4 +1452,19 @@ input:-webkit-autofill:active {
   border: 1px solid transparent;
   background: var(--blue__gradient);
   color: var(--white);
+}
+
+.expense-view-button {
+  padding: 0.3rem 1.3rem;
+  border: 1px solid var(--blue);
+  border-radius: 3px;
+  background: var(--blue__gradient);
+  color: var(--white);
+  transition: 0.4s background ease-in-out, 0.2s color ease, 0.2s border ease;
+}
+
+.expense-view-button:hover {
+  border: 1px solid var(--blue);
+  background: transparent;
+  color: var(--black);
 }

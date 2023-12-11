@@ -78,7 +78,9 @@ const ToReceiveContainer = () => {
       ) : (
         <div className="payment-container">
           {expenses.length > 0 &&
-          expenses.some((expense) => expense !== null) ? (
+          expenses.every((expense) => expense !== null && expense.completed) ? (
+            <p>No expenses to display.</p>
+          ) : (
             <div className="expense-container">
               <div className="expense-table">
                 <table className="expense-table">
@@ -92,7 +94,9 @@ const ToReceiveContainer = () => {
                   </thead>
                   <tbody>
                     {expenses
-                      .filter((expense) => expense !== null)
+                      .filter(
+                        (expense) => expense !== null && !expense.completed
+                      )
                       .map((expense, index) => (
                         //   <tr key={expense.id}>
                         <tr key={index}>
@@ -135,8 +139,6 @@ const ToReceiveContainer = () => {
                 </table>
               </div>
             </div>
-          ) : (
-            <p>No expenses to display.</p>
           )}
         </div>
       )}

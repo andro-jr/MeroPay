@@ -1,10 +1,10 @@
 import client from "./client";
 
-export const createExpense = async ({ owner, total, members }) => {
+export const createExpense = async ({ owner, expenseName, members }) => {
   try {
     const { data } = await client.post("/expense/create", {
       owner,
-      total,
+      expenseName,
       members,
     });
     return data;
@@ -52,13 +52,27 @@ export const singleExpenseDetail = async (expenseId) => {
 };
 
 export const updateExpense = async (formData) => {
-  console.log("check");
   try {
     const { data } = await client.post(`/expense/update`, formData);
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (err) {
     const { response } = err;
+    if (response?.data) return response.data;
+    return { error: err.message || err };
+  }
+};
+
+export const approveExpense = async (expenseId, userId) => {
+  try {
+    const { data } = await client.post("/expense/approve", {
+      expenseId,
+      userId,
+    });
+    console.log(data);
+    return data;
+  } catch (error) {
+    const { response } = error;
     if (response?.data) return response.data;
     return { error: err.message || err };
   }
