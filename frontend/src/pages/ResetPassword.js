@@ -58,11 +58,64 @@ const ResetPassword = () => {
     setPassword({ ...password, [name]: value });
   };
 
+  // const handleChange = ({ target }) => {
+  //   const { name, value } = target;
+
+  //   // Validate password requirements
+  //   const isValidPassword =
+  //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+  //       value
+  //     );
+
+  //   if (name === "one" && !isValidPassword) {
+  //     updateNotification(
+  //       "error",
+  //       "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+  //     );
+  //   }
+
+  //   setPassword({ ...password, [name]: value });
+  // };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (password.one !== password.two)
+  //     return updateNotification("error", "Passwords do not match");
+
+  //   const passwordInfo = {
+  //     newPassword: password.one,
+  //     userId: id,
+  //     token,
+  //   };
+
+  //   const { error, message } = await resetPassword(passwordInfo);
+  //   if (error) return updateNotification("error", error);
+
+  //   updateNotification("success", message);
+
+  //   navigate("/auth/sign-in", { replace: true });
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (password.one !== password.two)
+    if (password.one !== password.two) {
       return updateNotification("error", "Passwords do not match");
+    }
+
+    // Validate password requirements
+    const isValidPassword =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+        password.one
+      );
+
+    if (!isValidPassword) {
+      return updateNotification(
+        "error",
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+      );
+    }
 
     const passwordInfo = {
       newPassword: password.one,
