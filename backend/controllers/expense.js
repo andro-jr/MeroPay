@@ -147,6 +147,8 @@ exports.updateExpenses = async (req, res) => {
 exports.approveExpense = async (req, res) => {
   const { expenseId, userId } = req.body;
 
+  console.log(" inside");
+
   if (!isValidObjectId(userId) || !isValidObjectId(expenseId))
     return sendError(res, "Invalid Request");
   const expense = await Expense.findById(expenseId);
@@ -159,6 +161,22 @@ exports.approveExpense = async (req, res) => {
       }
     })
   );
+
+  let flag = 0;
+
+  expense.members.forEach((item) => {
+    if (item.status !== "approved") {
+      flag = 1;
+    }
+  });
+
+  console.log(flag);
+  if (flag === 0) {
+    expense.completed = true;
+    console.log("expense is completed");
+  }
+
+  await expense.save();
 
   const user = await User.findById(userId);
 
@@ -170,57 +188,6 @@ exports.approveExpense = async (req, res) => {
     subject: "Expense Approved",
     html: expenseApprovedTemplate(expense.expenseName),
   });
-
-  let flag = 0;
-
-  expense.members.forEach((item) => {
-    if (item.status !== "approved") {
-      flag = 1;
-    }
-  });
-
-  console.log(flag);
-  if (flag === 0) {
-    expense.completed = true;
-    console.log("expense is completed");
-  }
-
-  await expense.save();
-
-  res.send({ message: "Expense approved" });
-};
-
-exports.approveExpense = async (req, res) => {
-  const { expenseId, userId } = req.body;
-
-  if (!isValidObjectId(userId) || !isValidObjectId(expenseId))
-    return sendError(res, "Invalid Request");
-  const expense = await Expense.findById(expenseId);
-  if (!expense) return sendError(res, "Expense Not Found");
-
-  await Promise.all(
-    expense.members.map(async (item) => {
-      if (item.userId.valueOf() == userId) {
-        item.status = "approved";
-      }
-    })
-  );
-
-  let flag = 0;
-
-  expense.members.forEach((item) => {
-    if (item.status !== "approved") {
-      flag = 1;
-    }
-  });
-
-  console.log(flag);
-  if (flag === 0) {
-    expense.completed = true;
-    console.log("expense is completed");
-  }
-
-  await expense.save();
 
   res.send({ message: "Expense approved" });
 };
