@@ -80,7 +80,7 @@ const FriendsListOverlay = ({
 
                     <div className="friends">
                       <img
-                        src="/friends.svg"
+                        src="/unfriend.svg"
                         alt="remove friend"
                         className="add small"
                         sizes={15}
