@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { NotificationContext } from "../../context/NotificationProvider";
 import { AuthContext } from "../../context/AuthProvider";
 import { RefreshDataContext } from "../../context/RefreshDataProvider";
-import { acceptFriendRequest, rejectFriendRequest } from "../../api/friend";
+import { acceptFriendRequest, getAllFriends, rejectFriendRequest } from "../../api/friend";
 import Loader from "../Loader";
 import Loading from "../loader/Loading";
 
@@ -11,7 +11,7 @@ const PendingRequestList = ({ id: friendId, name, email, avatar }) => {
   const { updateNotification } = useContext(NotificationContext);
   const [loading, setLoading] = useState(false);
   const { authInfo } = useContext(AuthContext);
-  const { handleRefresh } = useContext(RefreshDataContext);
+  const { handleRefresh, refreshBool } = useContext(RefreshDataContext);
   const userId = authInfo.profile?.id;
 
   const acceptRequest = async () => {
@@ -31,6 +31,16 @@ const PendingRequestList = ({ id: friendId, name, email, avatar }) => {
     setLoading(false);
     handleRefresh();
   };
+
+  const fetchAllFriends = async (userId) => {
+    setLoading(true);
+    const res = await getAllFriends(userId);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchAllFriends(userId);
+  }, [refreshBool]);
 
   return (
     <div className="profile-friendRequest w-full">
