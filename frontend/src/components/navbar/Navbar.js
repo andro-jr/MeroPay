@@ -1,13 +1,58 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NavSearch from "./NavSearch";
 import { ExpenseContext } from "../../context/ExpenseProvider";
+import { ownerDetail } from "../../api/details";
+import { NotificationContext } from "../../context/NotificationProvider";
+import { useNavigate } from "react-router-dom";
+import { TabContext } from "../../context/TabProvider";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Navbar = () => {
   const { openModal } = useContext(ExpenseContext);
+
+  // const handleClick = (e) => {
+  //   e.preventDefault();
+  //   openModal();
+  // };
+
+  const { authInfo, isAuth } = useContext(AuthContext);
+  const [data, setData] = useState();
+  const username = authInfo.profile?.name;
+  const userId = authInfo?.profile?.id;
+  const navigate = useNavigate();
+  const { setTabIndex } = useContext(TabContext);
+  const { updateNotification } = useContext(NotificationContext);
+
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const data = await ownerDetail(userId);
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching owner details:", error);
+      }
+    };
+
+    getUserData();
+  }, [userId]);
+
+  const checkReady = () => {
+    if(data.paymentQR) {
+      openModal();
+    }
+    else{
+      updateNotification("error", "Please upload your QR code first");
+      navigate('/settings');
+      setTabIndex(4);
+      isAuth();
+    }
+  }
+
   const handleClick = (e) => {
     e.preventDefault();
-    openModal();
-  };
+    checkReady();
+  }
 
   return (
     <div className="navbar">
