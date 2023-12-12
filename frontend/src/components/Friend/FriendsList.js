@@ -113,7 +113,7 @@ const FriendsList = () => {
                 })
               ) : (
                 <div className='text-sm text-gray-300 text-center'>
-                  No frineds to show.
+                  No friends yet, add new people
                 </div>
               )}
             </div>
@@ -150,7 +150,7 @@ const FriendsList = () => {
             })
           ) : (
             <div className='text-sm text-gray-300 text-center'>
-              No friends to show.
+              No pending requests
             </div>
           )}
         </div>
