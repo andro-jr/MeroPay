@@ -6,19 +6,25 @@ import FriendsProfile from "./FriendsProfile";
 import FriendsRequest from "./FriendRequest";
 import DashSubHead from "../DashSubHead";
 import DashLink from "../DashLink";
-import { getAllFriends, getPendingFriends, removeFriend } from "../../api/friend";
+import {
+  getAllFriends,
+  getPendingFriends,
+  removeFriend,
+} from "../../api/friend";
 import { AuthContext } from "../../context/AuthProvider";
 import { RefreshDataContext } from "../../context/RefreshDataProvider";
 import FriendsListOverlay from "./FriendsListOverlay";
 import Loader from "../Loader";
 import PendingRequestOverlay from "./PendingRequestOverlay";
-import NotificationProvider, { NotificationContext } from "../../context/NotificationProvider";
+import NotificationProvider, {
+  NotificationContext,
+} from "../../context/NotificationProvider";
 
 const FriendsList = () => {
   const { authInfo } = useContext(AuthContext);
   const userId = authInfo.profile?.id;
   const { handleRefresh, refreshBool } = useContext(RefreshDataContext);
-   // notificaton provider
+  // notificaton provider
   //  const { updateNotification } = useContext(NotificationContext);
 
   const [isFriend, setIsFriend] = useState(true);
@@ -47,7 +53,7 @@ const FriendsList = () => {
     setPendingFriends(res);
     setLoading(false);
   };
-  
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -57,7 +63,7 @@ const FriendsList = () => {
   };
 
   const openPendingModal = () => {
-    setIsPendingModalOpen(true);;
+    setIsPendingModalOpen(true);
   };
 
   const closePendingModal = () => {
@@ -70,9 +76,9 @@ const FriendsList = () => {
   }, [refreshBool]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className='flex flex-col gap-4'>
       <DashboardContainer>
-        <div className="border-b-2 pb-3 border-gray-100 flex justify-between items-baseline">
+        <div className='border-b-2 pb-3 border-gray-100 flex justify-between items-baseline'>
           <DashSubHead>Friends</DashSubHead>
           <DashLink onClick={openModal}>view all</DashLink>
 
@@ -85,13 +91,13 @@ const FriendsList = () => {
           )}
         </div>
 
-        <div className="">
+        <div className=''>
           {loading ? (
-            <div className="flex items-center justify-center">
+            <div className='flex items-center justify-center'>
               <Loader />
             </div>
           ) : (
-            <div className="friends-list">
+            <div className='friends-list'>
               {friends.length > 0 ? (
                 friends.map((friend, index) => {
                   if (index < 3) {
@@ -106,8 +112,8 @@ const FriendsList = () => {
                   }
                 })
               ) : (
-                <div className="text-sm text-gray-300 text-center">
-                  You introvert have no friends
+                <div className='text-sm text-gray-300 text-center'>
+                  No frineds to show.
                 </div>
               )}
             </div>
@@ -116,18 +122,18 @@ const FriendsList = () => {
       </DashboardContainer>
 
       <DashboardContainer>
-        <div className="border-b-2 pb-3 border-gray-100 flex justify-between items-baseline">
+        <div className='border-b-2 pb-3 border-gray-100 flex justify-between items-baseline'>
           <DashSubHead>Pending Requests</DashSubHead>
           <DashLink onClick={openPendingModal}>view all</DashLink>
 
           {isPendingModalOpen && (
             <PendingRequestOverlay
-            pendingModalOpen={isPendingModalOpen}
-            pendingModalClose={closePendingModal}
+              pendingModalOpen={isPendingModalOpen}
+              pendingModalClose={closePendingModal}
             />
           )}
         </div>
-        <div className="request-container">
+        <div className='request-container'>
           {pendingFriends.length > 0 ? (
             pendingFriends.map((friend, index) => {
               if (index < 2) {
@@ -143,8 +149,8 @@ const FriendsList = () => {
               }
             })
           ) : (
-            <div className="text-sm text-gray-300 text-center">
-              No one likes you
+            <div className='text-sm text-gray-300 text-center'>
+              No friends to show.
             </div>
           )}
         </div>
