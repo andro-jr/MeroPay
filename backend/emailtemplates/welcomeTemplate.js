@@ -1,4 +1,4 @@
-exports.welcomeTemplate = () => `<!DOCTYPE html>
+exports.welcomeTemplate = (username) => `<!DOCTYPE html>
 
 <html
   lang="en"
@@ -358,7 +358,7 @@ exports.welcomeTemplate = () => `<!DOCTYPE html>
                                     "
                                   >
                                     <p style="margin: 0">
-                                      <strong>prabin</strong>
+                                      <strong>${username}</strong>
                                     </p>
                                   </div>
                                 </td>

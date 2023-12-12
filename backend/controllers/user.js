@@ -101,7 +101,7 @@ exports.verifyEmail = async (req, res) => {
     form: "meropaytest@gmail.com",
     to: user.email,
     subject: "Welcome Email",
-    html: welcomeTemplate(),
+    html: welcomeTemplate(user.name),
   });
 
   const jwtToken = jwt.sign({ euserId: user._id }, process.env.JWT_SECRET);
