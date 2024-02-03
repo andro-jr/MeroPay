@@ -367,7 +367,7 @@ exports.resetPasswordLinkTemplate = (link) => `<!DOCTYPE html>
                                   >
                                     <p style="margin: 0; margin-bottom: 16px">
                                       Click the following button to reset your
-                                      passsword. Only valid for two minutes.
+                                      passsword. Only valid for five minutes.
                                     </p>
                                     
                                   </div>

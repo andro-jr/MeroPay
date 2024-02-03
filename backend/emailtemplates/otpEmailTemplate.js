@@ -367,7 +367,7 @@ exports.otpTemplate = (otp) => {
 									  <p style="margin: 0">
 										Here's your One Time Password to validate
 										your email address. Please use it under
-										two minutes.
+										five minutes.
 									  </p>
 									</div>
 								  </td>
